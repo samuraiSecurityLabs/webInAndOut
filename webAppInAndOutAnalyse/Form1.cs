@@ -19,13 +19,13 @@ namespace webAppInAndOutAnalyse
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!this.httpRequestContent.Text.Equals(String.Empty))
+            if (this.httpRequestContent.Text!="" && this.httpRequestContent.Text!="粘贴觉得可疑的HTTP请求至此" )
             {
                 string content = httpRequestContent.Text;
                 Resolve cr= new Resolve();
                 cr.ResolveHttpRequest(content);
                 resourceAnalyse.ForeColor = Color.Red;
-                resourceAnalyse.Text = cr.Otherheaders + cr.Url + "\n" ;
+                resourceAnalyse.Text = cr.Url + "\r\n" + cr.Host;
 
             }
         }

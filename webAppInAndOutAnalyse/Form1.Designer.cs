@@ -107,6 +107,7 @@
             this.resourceAnalyse.Location = new System.Drawing.Point(6, 6);
             this.resourceAnalyse.Multiline = true;
             this.resourceAnalyse.Name = "resourceAnalyse";
+            this.resourceAnalyse.ReadOnly = true;
             this.resourceAnalyse.Size = new System.Drawing.Size(481, 157);
             this.resourceAnalyse.TabIndex = 0;
             // 

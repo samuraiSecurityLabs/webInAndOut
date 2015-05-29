@@ -108,6 +108,7 @@ namespace webAppInAndOutAnalyse
         public Resolve()
         {
             this.otherheaders = "";
+            this.body = "";
             Console.WriteLine("Constructor");
         }
         
@@ -127,7 +128,7 @@ namespace webAppInAndOutAnalyse
             Boolean tag;
             tag = false;
             String[] line = Regex.Split(httprequest, "\r\n", RegexOptions.IgnoreCase);
-            this.method=line[0].Split(' ')[0];
+            this.method=line[0].Split(' ')[0];//可能是connect , trace,post等等
             this.url=line[0].Split(' ')[1];
             this.protocal=line[0].Split(' ')[2];//解析请求第一行
 
@@ -139,13 +140,13 @@ namespace webAppInAndOutAnalyse
                 for (int i = 1; i < line.Length; ++i)
                 {
 
-                    if (line[i].Contains("Host:")) { this.host = line[i].Split(':')[1]; tag = true; }
-                    if (line[i].Contains("Connection:")) { this.connection = line[i].Split(':')[1]; tag = true; }
-                    if (line[i].Contains("User-Agent:")) { this.useragent = line[i].Split(':')[1]; tag = true; }
-                    if (line[i].Contains("Referer:")) { this.referer = line[i].Split(':')[1]; tag = true; }
-                    if (line[i].Contains("Cookie:")) { this.cookie = line[i].Split(':')[1]; tag = true; }
-                    if (line[i].Contains("Content-Length:")) { this.contentlength = line[i].Split(':')[1]; tag = true; }
-                    if (line[i].Contains("Content-type:")) { this.contenttype = line[i].Split(':')[1]; tag = true; }
+                    if (line[i].Contains("Host:")) { this.host = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Connection:")) { this.connection = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("User-Agent:")) { this.useragent = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Referer:")) { this.referer = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Cookie:")) { this.cookie = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Content-Length:")) { this.contentlength = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Content-type:")) { this.contenttype = line[i].Split(':')[1].Trim(); tag = true; }
                     if (tag.Equals(false))
                     {
                         this.otherheaders = this.otherheaders + line[i] + "\r\n";
@@ -158,12 +159,12 @@ namespace webAppInAndOutAnalyse
                 for (int i = 1; i < line.Length; ++i)
                 {
 
-                    if (line[i].Contains("Host:")) { this.host = line[i].Split(':')[1]; tag = true; }
-                    if (line[i].Contains("Connection:")) { this.connection = line[i].Split(':')[1]; tag = true; }
-                    if (line[i].Contains("User-Agent:")) { this.useragent = line[i].Split(':')[1]; tag = true; }
-                    if (line[i].Contains("Referer:")) { this.referer = line[i].Split(':')[1]; tag = true; }
-                    if (line[i].Contains("Cookie:")) { this.cookie = line[i].Split(':')[1]; tag = true; }
-                    if (line[i].Contains("Content-Length:")) { this.contentlength = line[i].Split(':')[1]; tag = true; }
+                    if (line[i].Contains("Host:")) { this.host = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Connection:")) { this.connection = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("User-Agent:")) { this.useragent = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Referer:")) { this.referer = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Cookie:")) { this.cookie = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Content-Length:")) { this.contentlength = line[i].Split(':')[1].Trim(); tag = true; }
                     if (tag.Equals(false))
                     {
                         this.otherheaders = this.otherheaders + line[i] + "\r\n"; 
