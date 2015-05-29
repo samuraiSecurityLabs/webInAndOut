@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace webAppInAndOutAnalyse
 {
@@ -23,7 +24,9 @@ namespace webAppInAndOutAnalyse
                 string content = httpRequestContent.Text;
                 Resolve cr= new Resolve();
                 cr.ResolveHttpRequest(content);
-                resourceAnalyse.Text = cr.Otherheaders;
+                resourceAnalyse.ForeColor = Color.Red;
+                resourceAnalyse.Text = cr.Otherheaders + cr.Url + "\n" ;
+
             }
         }
 
