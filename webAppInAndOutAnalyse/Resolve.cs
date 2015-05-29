@@ -134,7 +134,7 @@ namespace webAppInAndOutAnalyse
             if (this.method.Contains("POST"))//如果是POST请求
             {
 
-                this.body = Regex.Split(httprequest, "\r\n\r\n", RegexOptions.IgnoreCase)[1];//body part
+                this.body = Regex.Split(httprequest, "\r\n\r\n", RegexOptions.IgnoreCase)[1];//body part!!!
                 line = Regex.Split(Regex.Split(httprequest, "\r\n\r\n", RegexOptions.IgnoreCase)[0], "\r\n", RegexOptions.IgnoreCase);//header part
                 for (int i = 1; i < line.Length; ++i)
                 {
