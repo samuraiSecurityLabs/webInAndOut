@@ -131,7 +131,7 @@ namespace webAppInAndOutAnalyse
             this.url=line[0].Split(' ')[1];
             this.protocal=line[0].Split(' ')[2];//解析请求第一行
 
-            if (this.method.Contains("POST"))//如果是post请求
+            if (this.method.Contains("POST"))//如果是POST请求
             {
 
                 this.body = Regex.Split(httprequest, "\r\n\r\n", RegexOptions.IgnoreCase)[1];//body part
@@ -166,7 +166,7 @@ namespace webAppInAndOutAnalyse
                     if (line[i].Contains("Content-Length:")) { this.contentlength = line[i].Split(':')[1]; tag = true; }
                     if (tag.Equals(false))
                     {
-                        this.otherheaders = this.otherheaders + line[i] + "\r\n";
+                        this.otherheaders = this.otherheaders + line[i] + "\r\n"; 
                     }
                     tag = false;
                 }
