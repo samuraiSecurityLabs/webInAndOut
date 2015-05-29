@@ -1,0 +1,9 @@
+N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\bin\Debug\webAppInAndOutAnalyse.exe
+N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\bin\Debug\webAppInAndOutAnalyse.pdb
+N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\obj\x86\Debug\ResolveAssemblyReference.cache
+N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\obj\x86\Debug\webAppInAndOutAnalyse.Form1.resources
+N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\obj\x86\Debug\webAppInAndOutAnalyse.Properties.Resources.resources
+N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\obj\x86\Debug\GenerateResource.read.1.tlog
+N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\obj\x86\Debug\GenerateResource.write.1.tlog
+N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\obj\x86\Debug\webAppInAndOutAnalyse.exe
+N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\obj\x86\Debug\webAppInAndOutAnalyse.pdb
