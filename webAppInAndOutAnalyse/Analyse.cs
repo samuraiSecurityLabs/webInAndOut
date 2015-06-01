@@ -5,6 +5,8 @@ using System.Text;
 using System.Net;
 using System.IO;
 using System.Collections;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace webAppInAndOutAnalyse
 {
@@ -31,6 +33,14 @@ namespace webAppInAndOutAnalyse
             set { rspohtml = value; }
         }
 
+        private string rspoheader;
+
+        public string Rspoheader
+        {
+            get { return rspoheader; }
+            set { rspoheader = value; }
+        }
+
         public Analyse(string req,Resolve cr)//原始请求和解析类作为参数传递，接下来，交给解析类
         {
             this.req = req;
@@ -51,7 +61,20 @@ namespace webAppInAndOutAnalyse
             Dictionary<string, string> outcome = new Dictionary<string, string>();
             //直接response搜索输入点
 
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(Cr.Url);
+            HttpWebRequest req;
+            //如果是发送HTTPS请求  
+            if (Cr.Url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+            {
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+                
+                req = (HttpWebRequest)WebRequest.Create(Cr.Url);
+                
+                req.ProtocolVersion = HttpVersion.Version10;
+            }
+            else
+            {
+                req = (HttpWebRequest)WebRequest.Create(Cr.Url);
+            } 
 
             req.Method = Cr.Method;
 
@@ -84,6 +107,8 @@ namespace webAppInAndOutAnalyse
             }
 
             HttpWebResponse rspo = (HttpWebResponse)req.GetResponse();
+
+            this.rspoheader = rspo.StatusCode.ToString() + "\r\n" + rspo.Headers.ToString();//没有对头部做合适解析
 
             Stream responseStream = rspo.GetResponseStream();
 
@@ -124,6 +149,11 @@ namespace webAppInAndOutAnalyse
         { 
             //js,iframe,html,动态页等等
         }
+
+        private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+        {
+            return true; //总是接受  
+        }  
 
 
     }

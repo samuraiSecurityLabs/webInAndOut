@@ -30,7 +30,7 @@
         {
             this.httpRequestContent = new System.Windows.Forms.TextBox();
             this.sendRequest = new System.Windows.Forms.Button();
-            this.page = new System.Windows.Forms.TabControl();
+            this.tab = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.resourceAnalyse = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -39,10 +39,13 @@
             this.clearRequest = new System.Windows.Forms.Button();
             this.findinandout = new System.Windows.Forms.TextBox();
             this.httpresponse = new System.Windows.Forms.TextBox();
-            this.page.SuspendLayout();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.httpresponseheaders = new System.Windows.Forms.TextBox();
+            this.tab.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // httpRequestContent
@@ -66,16 +69,17 @@
             this.sendRequest.UseVisualStyleBackColor = true;
             this.sendRequest.Click += new System.EventHandler(this.button1_Click);
             // 
-            // page
+            // tab
             // 
-            this.page.Controls.Add(this.tabPage1);
-            this.page.Controls.Add(this.tabPage2);
-            this.page.Controls.Add(this.tabPage3);
-            this.page.Location = new System.Drawing.Point(12, 246);
-            this.page.Name = "page";
-            this.page.SelectedIndex = 0;
-            this.page.Size = new System.Drawing.Size(501, 247);
-            this.page.TabIndex = 2;
+            this.tab.Controls.Add(this.tabPage1);
+            this.tab.Controls.Add(this.tabPage2);
+            this.tab.Controls.Add(this.tabPage3);
+            this.tab.Controls.Add(this.tabPage4);
+            this.tab.Location = new System.Drawing.Point(12, 246);
+            this.tab.Name = "tab";
+            this.tab.SelectedIndex = 0;
+            this.tab.Size = new System.Drawing.Size(501, 247);
+            this.tab.TabIndex = 2;
             // 
             // tabPage1
             // 
@@ -83,7 +87,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(493, 176);
+            this.tabPage1.Size = new System.Drawing.Size(493, 221);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "资源分析";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -105,7 +109,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(493, 176);
+            this.tabPage2.Size = new System.Drawing.Size(493, 221);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "输入输出点";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -163,6 +167,27 @@
             this.httpresponse.TabIndex = 0;
             this.httpresponse.WordWrap = false;
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.httpresponseheaders);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(493, 221);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "响应头部";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // httpresponseheaders
+            // 
+            this.httpresponseheaders.Location = new System.Drawing.Point(7, 7);
+            this.httpresponseheaders.Multiline = true;
+            this.httpresponseheaders.Name = "httpresponseheaders";
+            this.httpresponseheaders.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.httpresponseheaders.Size = new System.Drawing.Size(480, 208);
+            this.httpresponseheaders.TabIndex = 0;
+            this.httpresponseheaders.WordWrap = false;
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -170,18 +195,20 @@
             this.ClientSize = new System.Drawing.Size(528, 505);
             this.Controls.Add(this.clearRequest);
             this.Controls.Add(this.savaRequest);
-            this.Controls.Add(this.page);
+            this.Controls.Add(this.tab);
             this.Controls.Add(this.sendRequest);
             this.Controls.Add(this.httpRequestContent);
             this.Name = "mainForm";
             this.Text = "跨站辅助 samuraiSecurityLabs";
-            this.page.ResumeLayout(false);
+            this.tab.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -191,7 +218,7 @@
 
         private System.Windows.Forms.TextBox httpRequestContent;
         private System.Windows.Forms.Button sendRequest;
-        private System.Windows.Forms.TabControl page;
+        private System.Windows.Forms.TabControl tab;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
@@ -200,6 +227,8 @@
         private System.Windows.Forms.Button clearRequest;
         private System.Windows.Forms.TextBox findinandout;
         private System.Windows.Forms.TextBox httpresponse;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TextBox httpresponseheaders;
     }
 }
 

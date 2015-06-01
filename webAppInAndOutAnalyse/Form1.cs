@@ -88,6 +88,12 @@ namespace webAppInAndOutAnalyse
 
                 httpresponse.Text = ay.Rspohtml;
 
+                //响应头部
+
+                httpresponseheaders.Text = "";
+
+                httpresponseheaders.Text = ay.Rspoheader;
+
             }
         }
 
