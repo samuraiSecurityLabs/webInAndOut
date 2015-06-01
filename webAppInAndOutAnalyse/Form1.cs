@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Net;
+using System.IO;
 
 
 namespace webAppInAndOutAnalyse
@@ -19,6 +21,7 @@ namespace webAppInAndOutAnalyse
 
         private void button1_Click(object sender, EventArgs e)
         {
+            this.resourceAnalyse.Text = "";
             if (this.httpRequestContent.Text!="" && this.httpRequestContent.Text!="粘贴觉得可疑的HTTP请求至此" )
             {
                 string content = httpRequestContent.Text;
@@ -32,7 +35,7 @@ namespace webAppInAndOutAnalyse
                 resourceAnalyse.ForeColor = Color.Red;
                 //resourceAnalyse.Text = cr.Url + "\r\n" + cr.Host ;
 
-                resourceAnalyse.Text += "cookie参数：\r\n";
+                resourceAnalyse.Text += "cookie参数:(" + cr.CookieList.Count + ")\r\n";
 
                 foreach (KeyValuePair<string, string> keys in cr.CookieList)
                 {
@@ -43,7 +46,7 @@ namespace webAppInAndOutAnalyse
 
                 tmp = "";
 
-                resourceAnalyse.Text += "header参数：\r\n";
+                resourceAnalyse.Text += "header参数:(" + cr.Headerpars.Count + ")\r\n";
 
                 foreach (KeyValuePair<string, string> keys in cr.Headerpars)
                 {
@@ -56,14 +59,15 @@ namespace webAppInAndOutAnalyse
 
                 Dictionary<string, string> tmp1 = cr.Bodypars;
 
-
-                resourceAnalyse.Text += "body参数：\r\n";
+                resourceAnalyse.Text += "body参数：("+ cr.Bodypars.Count +")\r\n";
 
                 foreach (KeyValuePair<string, string> keys in tmp1)
                 {
                     tmp = tmp + keys.Key + "=" + keys.Value + "\r\n";
                 }
+
                 resourceAnalyse.Text += tmp;
+
             }
         }
 

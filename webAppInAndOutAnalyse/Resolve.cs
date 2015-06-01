@@ -119,18 +119,6 @@ namespace webAppInAndOutAnalyse
         {
             get
             {
-                if (this.cookie == String.Empty) { return this.cookieList; }
-
-                String[] t = this.cookie.Split(';');
-
-                foreach (string tt in t)
-                {
-                    String[] tmp = tt.Split('=');
-
-                    this.cookieList.Add(tmp[0].Trim(), tmp[1].Trim());//debug
-
-                }
-
                 return this.cookieList;
             }
             set { cookieList = value; }
@@ -142,17 +130,6 @@ namespace webAppInAndOutAnalyse
         {
             get
             {
-                if (this.url.Split('?').Length > 1)
-                {
-                    string[] pars = this.url.Split('?')[1].Split('&');
-
-                    foreach (string par in pars)
-                    {
-                        this.headerpars.Add(par.Split('=')[0].Trim(), par.Split('=')[1].Trim());
-                    }
-                    return this.headerpars;
-                }
-                else
                     return this.headerpars;
             }
             set { headerpars = value; }
@@ -164,15 +141,6 @@ namespace webAppInAndOutAnalyse
         {
             get
             {
-                if (this.body.Equals(String.Empty)) return this.bodypars;
-
-                string[] pars = this.body.Split('&');
-
-                foreach (string par in pars)
-                {
-                    this.bodypars.Add(par.Split('=')[0].Trim(), par.Split('=')[1].Trim());
-                }
-
                 return this.bodypars;
             }
             set { bodypars = value; }
@@ -186,6 +154,17 @@ namespace webAppInAndOutAnalyse
             this.headerpars = new Dictionary<string,string>();
             this.bodypars = new Dictionary<string,string>();
             Console.WriteLine("Constructor");
+        }
+
+        static int SubstringCount(string str, string substring)
+        {
+            if (str.Contains(substring))
+            {
+                string strReplaced = str.Replace(substring, "");
+                return (str.Length - strReplaced.Length) / substring.Length;
+            }
+
+            return 0;
         }
         
         public void ResolveHttpRequest(string httprequest)
@@ -219,11 +198,16 @@ namespace webAppInAndOutAnalyse
                     if (line[i].Contains("Host:")) { this.host = line[i].Split(':')[1].Trim(); tag = true; }
                     if (line[i].Contains("Connection:")) { this.connection = line[i].Split(':')[1].Trim(); tag = true; }
                     if (line[i].Contains("User-Agent:")) { this.useragent = line[i].Split(':')[1].Trim(); tag = true; }
-                    if (line[i].Contains("Referer:")) { this.referer = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Referer:")) 
+                    {
+                        this.referer = Regex.Split(line[i], "Referer:", RegexOptions.IgnoreCase)[1].Trim(); 
+                        
+                        tag = true;
+                    }
                     if (line[i].Contains("Cookie:")) 
                     { 
 
-                        this.cookie = Regex.Split(line[i], "Cookie:", RegexOptions.IgnoreCase)[1]; 
+                        this.cookie = Regex.Split(line[i], "Cookie:", RegexOptions.IgnoreCase)[1].Trim(); 
                         
                         tag = true; 
                     }
@@ -244,11 +228,16 @@ namespace webAppInAndOutAnalyse
                     if (line[i].Contains("Host:")) { this.host = line[i].Split(':')[1].Trim(); tag = true; }
                     if (line[i].Contains("Connection:")) { this.connection = line[i].Split(':')[1].Trim(); tag = true; }
                     if (line[i].Contains("User-Agent:")) { this.useragent = line[i].Split(':')[1].Trim(); tag = true; }
-                    if (line[i].Contains("Referer:")) { this.referer = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Referer:"))
+                    {
+                        this.referer = Regex.Split(line[i], "Referer:", RegexOptions.IgnoreCase)[1].Trim();
+
+                        tag = true;
+                    }
                     if (line[i].Contains("Cookie:"))
                     {
 
-                        this.cookie = Regex.Split(line[i], "Cookie:", RegexOptions.IgnoreCase)[1];
+                        this.cookie = Regex.Split(line[i], "Cookie:", RegexOptions.IgnoreCase)[1].Trim();
 
                         tag = true;
                     }
@@ -260,6 +249,59 @@ namespace webAppInAndOutAnalyse
                     tag = false;
                 }
             }
+
+
+            string[] pars;
+            //resolve header
+            if (this.url.Split('?').Length > 1)
+            {
+                pars = this.url.Split('?')[1].Split('&');
+
+                foreach (string par in pars)
+                {
+                    this.headerpars.Add(par.Split('=')[0].Trim(), par.Split('=')[1].Trim());
+                }
+            }
+
+            //resolve body
+            if (this.body.Equals(String.Empty) == false)
+            {
+                pars = this.body.Split('&');
+
+                foreach (string par in pars)
+                {
+                    this.bodypars.Add(par.Split('=')[0].Trim(), par.Split('=')[1].Trim());
+                }
+            }
+
+            //resolve cookie
+            if (this.cookie != null)
+            {
+                String[] t = this.cookie.Split(';');
+
+                foreach (string tt in t)
+                {
+                    if (SubstringCount(tt, "=") > 1)
+
+                    { //异常cookie，如：__gads=ID=92bf8cb62cc36be5:T=1431422228:S=ALNI_Ma9riYEUPDWLlhtxe6ip1TA9M5nag; 
+                      //取第一个参数__gads
+                        this.cookieList.Add("Abnormal" + tt.Split('=')[0].Trim(), tt); //异常cookie前面增加Abnormal标记
+                    }
+
+                    else
+                    {
+                        String[] tmp = tt.Split('='); //正常情况  key=value;
+
+                        this.cookieList.Add(tmp[0].Trim(), tmp[1].Trim());//debug
+                    }
+
+                }
+
+            }
+
+
+
+
         }
 
     }

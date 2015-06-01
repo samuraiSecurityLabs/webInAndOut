@@ -32,9 +32,9 @@
             this.sendRequest = new System.Windows.Forms.Button();
             this.page = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.resourceAnalyse = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.resourceAnalyse = new System.Windows.Forms.TextBox();
             this.savaRequest = new System.Windows.Forms.Button();
             this.clearRequest = new System.Windows.Forms.Button();
             this.page.SuspendLayout();
@@ -46,9 +46,11 @@
             this.httpRequestContent.Location = new System.Drawing.Point(13, 12);
             this.httpRequestContent.Multiline = true;
             this.httpRequestContent.Name = "httpRequestContent";
+            this.httpRequestContent.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.httpRequestContent.Size = new System.Drawing.Size(501, 189);
             this.httpRequestContent.TabIndex = 0;
             this.httpRequestContent.Text = "粘贴觉得可疑的HTTP请求至此";
+            this.httpRequestContent.WordWrap = false;
             // 
             // sendRequest
             // 
@@ -56,7 +58,7 @@
             this.sendRequest.Name = "sendRequest";
             this.sendRequest.Size = new System.Drawing.Size(75, 23);
             this.sendRequest.TabIndex = 1;
-            this.sendRequest.Text = "发送";
+            this.sendRequest.Text = "发送请求";
             this.sendRequest.UseVisualStyleBackColor = true;
             this.sendRequest.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -82,12 +84,23 @@
             this.tabPage1.Text = "资源分析";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // resourceAnalyse
+            // 
+            this.resourceAnalyse.Location = new System.Drawing.Point(6, 6);
+            this.resourceAnalyse.Multiline = true;
+            this.resourceAnalyse.Name = "resourceAnalyse";
+            this.resourceAnalyse.ReadOnly = true;
+            this.resourceAnalyse.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.resourceAnalyse.Size = new System.Drawing.Size(481, 157);
+            this.resourceAnalyse.TabIndex = 0;
+            this.resourceAnalyse.WordWrap = false;
+            // 
             // tabPage2
             // 
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(493, 141);
+            this.tabPage2.Size = new System.Drawing.Size(493, 176);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "输入输出点";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -97,19 +110,10 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(493, 141);
+            this.tabPage3.Size = new System.Drawing.Size(493, 176);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "响应内容";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // resourceAnalyse
-            // 
-            this.resourceAnalyse.Location = new System.Drawing.Point(6, 6);
-            this.resourceAnalyse.Multiline = true;
-            this.resourceAnalyse.Name = "resourceAnalyse";
-            this.resourceAnalyse.ReadOnly = true;
-            this.resourceAnalyse.Size = new System.Drawing.Size(481, 157);
-            this.resourceAnalyse.TabIndex = 0;
             // 
             // savaRequest
             // 
