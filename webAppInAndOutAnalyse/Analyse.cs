@@ -9,13 +9,27 @@ namespace webAppInAndOutAnalyse
 {
     class Analyse
     {
-        public Analyse(string req,Resolve rs)//原始请求和解析类作为参数传递，接下来，交给解析类
+
+        private string req;//请求
+
+        private Resolve cr;//解析器
+
+        private string rspo;//响应
+
+        public Analyse(string req,Resolve cr)//原始请求和解析类作为参数传递，接下来，交给解析类
         {
+            this.req = req;
+
+            this.cr = cr;
+            
             Console.WriteLine("Start to analyse!");
         }
 
-        public Array[] ParametersInRequest(string request)//把整个请求的输入点都分析到。包括cookie的解析等等
+        public Array[] ParametersInRequest()//把整个请求的输入点都分析到。包括cookie的解析等等
         {//参数记得调用htmldecode还原一下
+            
+            cr.ResolveHttpRequest(this.req);//请求的原文交给解析类
+
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(cr.Url);
 
             req.Method = cr.Method;
@@ -36,8 +50,11 @@ namespace webAppInAndOutAnalyse
 
             req.CookieContainer = cc;
 
-            cc.Add(new Uri(cr.Url), new Cookie("1", "cnzz_a1708446"));
-
+            foreach (KeyValuePair<string, string> keys in cr.CookieList)//这里有异常cookie的隐患
+            {
+                cc.Add(new Uri(cr.Url), new Cookie(keys.Key, keys.Value));//这里会new特别多的cookie对象，必须后续优化掉！
+            }
+       
             HttpWebResponse rspo = (HttpWebResponse)req.GetResponse();
 
             Stream responseStream = rspo.GetResponseStream();
@@ -46,11 +63,6 @@ namespace webAppInAndOutAnalyse
 
             string html = streamReader.ReadToEnd();
 
-            MessageBox.Show(html);
-
-            MessageBox.Show(rspo.Headers.ToString());
-
-            MessageBox.Show(rspo.StatusCode.ToString);
             return null;
         }
 
