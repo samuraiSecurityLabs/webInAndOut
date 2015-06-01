@@ -37,8 +37,12 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.savaRequest = new System.Windows.Forms.Button();
             this.clearRequest = new System.Windows.Forms.Button();
+            this.findinandout = new System.Windows.Forms.TextBox();
+            this.httpresponse = new System.Windows.Forms.TextBox();
             this.page.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // httpRequestContent
@@ -67,10 +71,10 @@
             this.page.Controls.Add(this.tabPage1);
             this.page.Controls.Add(this.tabPage2);
             this.page.Controls.Add(this.tabPage3);
-            this.page.Location = new System.Drawing.Point(12, 291);
+            this.page.Location = new System.Drawing.Point(12, 246);
             this.page.Name = "page";
             this.page.SelectedIndex = 0;
-            this.page.Size = new System.Drawing.Size(501, 202);
+            this.page.Size = new System.Drawing.Size(501, 247);
             this.page.TabIndex = 2;
             // 
             // tabPage1
@@ -97,6 +101,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.findinandout);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -107,10 +112,11 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.httpresponse);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(493, 176);
+            this.tabPage3.Size = new System.Drawing.Size(493, 221);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "响应内容";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -134,6 +140,29 @@
             this.clearRequest.UseVisualStyleBackColor = true;
             this.clearRequest.Click += new System.EventHandler(this.clearRequest_Click);
             // 
+            // findinandout
+            // 
+            this.findinandout.Enabled = false;
+            this.findinandout.ForeColor = System.Drawing.Color.Red;
+            this.findinandout.Location = new System.Drawing.Point(7, 7);
+            this.findinandout.Multiline = true;
+            this.findinandout.Name = "findinandout";
+            this.findinandout.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.findinandout.Size = new System.Drawing.Size(480, 163);
+            this.findinandout.TabIndex = 0;
+            this.findinandout.WordWrap = false;
+            // 
+            // httpresponse
+            // 
+            this.httpresponse.Enabled = false;
+            this.httpresponse.Location = new System.Drawing.Point(4, 7);
+            this.httpresponse.Multiline = true;
+            this.httpresponse.Name = "httpresponse";
+            this.httpresponse.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.httpresponse.Size = new System.Drawing.Size(483, 163);
+            this.httpresponse.TabIndex = 0;
+            this.httpresponse.WordWrap = false;
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -149,6 +178,10 @@
             this.page.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,6 +198,8 @@
         private System.Windows.Forms.TextBox resourceAnalyse;
         private System.Windows.Forms.Button savaRequest;
         private System.Windows.Forms.Button clearRequest;
+        private System.Windows.Forms.TextBox findinandout;
+        private System.Windows.Forms.TextBox httpresponse;
     }
 }
 

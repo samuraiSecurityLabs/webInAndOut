@@ -24,20 +24,34 @@ namespace webAppInAndOutAnalyse
             this.resourceAnalyse.Text = "";
             if (this.httpRequestContent.Text!="" && this.httpRequestContent.Text!="粘贴觉得可疑的HTTP请求至此" )
             {
-                string content = httpRequestContent.Text;
-                
+                //输入输出点分析
+
+                findinandout.Text = "";
+
                 string tmp = "";
+
+                string content = httpRequestContent.Text;
+               
+                Resolve cr= new Resolve();//初始化一个解析器
+
+                Analyse ay = new Analyse(content, cr);//初始化一个分析器
+
+                foreach (KeyValuePair<string, string> keys in ay.ResponseAnalysis())
+                {
+                    tmp = tmp + keys.Key + "=" + keys.Value + "\r\n";
+                }
+
+                findinandout.Text += tmp;
                 
-                Resolve cr= new Resolve();
-                
-                cr.ResolveHttpRequest(content);
-                
+
+                //资源分析
+
                 resourceAnalyse.ForeColor = Color.Red;
-                //resourceAnalyse.Text = cr.Url + "\r\n" + cr.Host ;
+                //resourceAnalyse.Text =ay.Cr.Url + "\r\n" + ay.Cr.Host ;
 
-                resourceAnalyse.Text += "cookie参数:(" + cr.CookieList.Count + ")\r\n";
+                resourceAnalyse.Text += "cookie参数:(" + ay.Cr.CookieList.Count + ")\r\n";
 
-                foreach (KeyValuePair<string, string> keys in cr.CookieList)
+                foreach (KeyValuePair<string, string> keys in ay.Cr.CookieList)
                 {
                     tmp = tmp + keys.Key + "="+ keys.Value + "\r\n";
                 }
@@ -46,9 +60,9 @@ namespace webAppInAndOutAnalyse
 
                 tmp = "";
 
-                resourceAnalyse.Text += "header参数:(" + cr.Headerpars.Count + ")\r\n";
+                resourceAnalyse.Text += "header参数:(" + ay.Cr.Headerpars.Count + ")\r\n";
 
-                foreach (KeyValuePair<string, string> keys in cr.Headerpars)
+                foreach (KeyValuePair<string, string> keys in ay.Cr.Headerpars)
                 {
                     tmp = tmp + keys.Key + "=" + keys.Value + "\r\n";
                 }
@@ -57,9 +71,9 @@ namespace webAppInAndOutAnalyse
 
                 tmp = "";
 
-                Dictionary<string, string> tmp1 = cr.Bodypars;
+                Dictionary<string, string> tmp1 = ay.Cr.Bodypars;
 
-                resourceAnalyse.Text += "body参数：("+ cr.Bodypars.Count +")\r\n";
+                resourceAnalyse.Text += "body参数：("+ ay.Cr.Bodypars.Count +")\r\n";
 
                 foreach (KeyValuePair<string, string> keys in tmp1)
                 {
@@ -67,6 +81,12 @@ namespace webAppInAndOutAnalyse
                 }
 
                 resourceAnalyse.Text += tmp;
+
+                //响应内容
+
+                httpresponse.Text = "";
+
+                httpresponse.Text = ay.Rspohtml;
 
             }
         }
