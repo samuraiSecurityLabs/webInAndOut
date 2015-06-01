@@ -59,6 +59,48 @@ namespace webAppInAndOutAnalyse
         public Dictionary<string, string> ResponseAnalysis()//分析当前的响应，仅仅针对于显示的能够直接在源码中看到。
         {
             Dictionary<string, string> outcome = new Dictionary<string, string>();
+
+            GetHttpResponse(Cr);//初始化了rspohtml
+            
+            foreach (KeyValuePair<string, string> keys in Cr.Headerpars)//查找的效率较低，要优化
+            {
+                if (this.rspohtml.IndexOf(keys.Value) >= 0)
+                {
+                    outcome.Add("Header" + keys.Key, keys.Value);
+                }
+            }
+
+            foreach (KeyValuePair<string, string> keys in Cr.Bodypars)
+            {
+                if (this.rspohtml.IndexOf(keys.Value) >= 0)
+                {
+                    outcome.Add("Body" + keys.Key, keys.Value);
+                }
+            }
+
+            foreach (KeyValuePair<string, string> keys in Cr.CookieList)
+            {
+                if (this.rspohtml.IndexOf(keys.Value) >= 0)
+                {
+                    outcome.Add("Cookie" + keys.Key, keys.Value);
+                }
+            }
+
+            return outcome;
+        }
+
+        public void ExternalResourceInResponse(string response)//当前响应中的外部资源，除图片之外的全部抓到
+        { 
+            //js,iframe,html,动态页等等
+        }
+
+        private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+        {
+            return true; //总是接受  
+        }
+
+        private HttpWebResponse GetHttpResponse(Resolve Cr)
+        {
             //直接response搜索输入点
 
             HttpWebRequest req;
@@ -66,15 +108,15 @@ namespace webAppInAndOutAnalyse
             if (Cr.Url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
             {
                 ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-                
+
                 req = (HttpWebRequest)WebRequest.Create(Cr.Url);
-                
+
                 req.ProtocolVersion = HttpVersion.Version10;
             }
             else
             {
                 req = (HttpWebRequest)WebRequest.Create(Cr.Url);
-            } 
+            }
 
             req.Method = Cr.Method;
 
@@ -118,43 +160,8 @@ namespace webAppInAndOutAnalyse
 
             this.rspohtml = html;
 
-            foreach (KeyValuePair<string, string> keys in Cr.Headerpars)//查找的效率较低，要优化
-            {
-                if (html.IndexOf(keys.Value)>0) 
-                { 
-                    outcome.Add("Header"+keys.Key,keys.Value);
-                }
-            }
-
-            foreach (KeyValuePair<string, string> keys in Cr.Bodypars)
-            {
-                if (html.IndexOf(keys.Value) > 0)
-                {
-                    outcome.Add("Body"+ keys.Key , keys.Value);
-                }
-            }
-
-            foreach (KeyValuePair<string, string> keys in Cr.CookieList)
-            {
-                if (html.IndexOf(keys.Value) > 0)
-                {
-                    outcome.Add("Cookie"+ keys.Key , keys.Value);
-                }
-            }
-
-            return outcome;
+            return rspo;
         }
-
-        public void ExternalResourceInResponse(string response)//当前响应中的外部资源，除图片之外的全部抓到
-        { 
-            //js,iframe,html,动态页等等
-        }
-
-        private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
-        {
-            return true; //总是接受  
-        }  
-
 
     }
 }

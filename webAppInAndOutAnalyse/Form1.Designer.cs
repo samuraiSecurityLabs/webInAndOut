@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
             this.httpRequestContent = new System.Windows.Forms.TextBox();
             this.sendRequest = new System.Windows.Forms.Button();
             this.tab = new System.Windows.Forms.TabControl();
@@ -41,11 +42,18 @@
             this.httpresponse = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.httpresponseheaders = new System.Windows.Forms.TextBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.tab.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // httpRequestContent
@@ -75,6 +83,7 @@
             this.tab.Controls.Add(this.tabPage2);
             this.tab.Controls.Add(this.tabPage3);
             this.tab.Controls.Add(this.tabPage4);
+            this.tab.Controls.Add(this.tabPage5);
             this.tab.Location = new System.Drawing.Point(12, 246);
             this.tab.Name = "tab";
             this.tab.SelectedIndex = 0;
@@ -99,7 +108,7 @@
             this.resourceAnalyse.Name = "resourceAnalyse";
             this.resourceAnalyse.ReadOnly = true;
             this.resourceAnalyse.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.resourceAnalyse.Size = new System.Drawing.Size(481, 157);
+            this.resourceAnalyse.Size = new System.Drawing.Size(481, 209);
             this.resourceAnalyse.TabIndex = 0;
             this.resourceAnalyse.WordWrap = false;
             // 
@@ -152,18 +161,17 @@
             this.findinandout.Multiline = true;
             this.findinandout.Name = "findinandout";
             this.findinandout.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.findinandout.Size = new System.Drawing.Size(480, 163);
+            this.findinandout.Size = new System.Drawing.Size(480, 208);
             this.findinandout.TabIndex = 0;
             this.findinandout.WordWrap = false;
             // 
             // httpresponse
             // 
-            this.httpresponse.Enabled = false;
             this.httpresponse.Location = new System.Drawing.Point(4, 7);
             this.httpresponse.Multiline = true;
             this.httpresponse.Name = "httpresponse";
-            this.httpresponse.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.httpresponse.Size = new System.Drawing.Size(483, 163);
+            this.httpresponse.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.httpresponse.Size = new System.Drawing.Size(483, 208);
             this.httpresponse.TabIndex = 0;
             this.httpresponse.WordWrap = false;
             // 
@@ -183,10 +191,68 @@
             this.httpresponseheaders.Location = new System.Drawing.Point(7, 7);
             this.httpresponseheaders.Multiline = true;
             this.httpresponseheaders.Name = "httpresponseheaders";
-            this.httpresponseheaders.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.httpresponseheaders.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.httpresponseheaders.Size = new System.Drawing.Size(480, 208);
             this.httpresponseheaders.TabIndex = 0;
             this.httpresponseheaders.WordWrap = false;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.richTextBox1);
+            this.tabPage5.Controls.Add(this.label1);
+            this.tabPage5.Controls.Add(this.button3);
+            this.tabPage5.Controls.Add(this.textBox1);
+            this.tabPage5.Controls.Add(this.button2);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(493, 221);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "PayLoad";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(440, 33);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(47, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "删除";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(7, 4);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(427, 48);
+            this.textBox1.TabIndex = 2;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(440, 4);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(47, 23);
+            this.button3.TabIndex = 3;
+            this.button3.Text = "保存";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 60);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 12);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "现有Payload";
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(3, 75);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(484, 140);
+            this.richTextBox1.TabIndex = 6;
+            this.richTextBox1.Text = "";
             // 
             // mainForm
             // 
@@ -198,6 +264,7 @@
             this.Controls.Add(this.tab);
             this.Controls.Add(this.sendRequest);
             this.Controls.Add(this.httpRequestContent);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "mainForm";
             this.Text = "跨站辅助 samuraiSecurityLabs";
             this.tab.ResumeLayout(false);
@@ -209,6 +276,8 @@
             this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -229,6 +298,12 @@
         private System.Windows.Forms.TextBox httpresponse;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TextBox httpresponseheaders;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Label label1;
     }
 }
 
