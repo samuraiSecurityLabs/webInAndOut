@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Collections;
+
 
 
 namespace webAppInAndOutAnalyse
 {
     class Resolve
     {
+
+        private readonly string[] conststring = { 
+                                                    "callback", 
+                                                    "redirect", 
+                                                    "jump" };//参数里面的关键字，预先定义一下。
+
         private string host;//avatar.csdn.net
 
         public string Host
@@ -105,10 +113,78 @@ namespace webAppInAndOutAnalyse
 
 
 
+        private Dictionary<string, string> cookieList;
+
+        public Dictionary<string, string> CookieList
+        {
+            get
+            {
+                if (this.cookie == String.Empty) { return this.cookieList; }
+
+                String[] t = this.cookie.Split(';');
+
+                foreach (string tt in t)
+                {
+                    String[] tmp = tt.Split('=');
+
+                    this.cookieList.Add(tmp[0].Trim(), tmp[1].Trim());//debug
+
+                }
+
+                return this.cookieList;
+            }
+            set { cookieList = value; }
+        }
+
+        private Dictionary<string, string> headerpars;
+
+        public Dictionary<string, string> Headerpars
+        {
+            get
+            {
+                if (this.url.Split('?').Length > 1)
+                {
+                    string[] pars = this.url.Split('?')[1].Split('&');
+
+                    foreach (string par in pars)
+                    {
+                        this.headerpars.Add(par.Split('=')[0].Trim(), par.Split('=')[1].Trim());
+                    }
+                    return this.headerpars;
+                }
+                else
+                    return this.headerpars;
+            }
+            set { headerpars = value; }
+        }
+
+        private Dictionary<string, string> bodypars;
+
+        public Dictionary<string, string> Bodypars
+        {
+            get
+            {
+                if (this.body.Equals(String.Empty)) return this.bodypars;
+
+                string[] pars = this.body.Split('&');
+
+                foreach (string par in pars)
+                {
+                    this.bodypars.Add(par.Split('=')[0].Trim(), par.Split('=')[1].Trim());
+                }
+
+                return this.bodypars;
+            }
+            set { bodypars = value; }
+        }
+
         public Resolve()
         {
             this.otherheaders = "";
             this.body = "";
+            this.cookieList= new Dictionary<string,string>();
+            this.headerpars = new Dictionary<string,string>();
+            this.bodypars = new Dictionary<string,string>();
             Console.WriteLine("Constructor");
         }
         
@@ -144,9 +220,15 @@ namespace webAppInAndOutAnalyse
                     if (line[i].Contains("Connection:")) { this.connection = line[i].Split(':')[1].Trim(); tag = true; }
                     if (line[i].Contains("User-Agent:")) { this.useragent = line[i].Split(':')[1].Trim(); tag = true; }
                     if (line[i].Contains("Referer:")) { this.referer = line[i].Split(':')[1].Trim(); tag = true; }
-                    if (line[i].Contains("Cookie:")) { this.cookie = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Cookie:")) 
+                    { 
+
+                        this.cookie = Regex.Split(line[i], "Cookie:", RegexOptions.IgnoreCase)[1]; 
+                        
+                        tag = true; 
+                    }
                     if (line[i].Contains("Content-Length:")) { this.contentlength = line[i].Split(':')[1].Trim(); tag = true; }
-                    if (line[i].Contains("Content-type:")) { this.contenttype = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Content-type:")) { this.Contenttype = line[i].Split(':')[1].Trim(); tag = true; }
                     if (tag.Equals(false))
                     {
                         this.otherheaders = this.otherheaders + line[i] + "\r\n";
@@ -163,7 +245,13 @@ namespace webAppInAndOutAnalyse
                     if (line[i].Contains("Connection:")) { this.connection = line[i].Split(':')[1].Trim(); tag = true; }
                     if (line[i].Contains("User-Agent:")) { this.useragent = line[i].Split(':')[1].Trim(); tag = true; }
                     if (line[i].Contains("Referer:")) { this.referer = line[i].Split(':')[1].Trim(); tag = true; }
-                    if (line[i].Contains("Cookie:")) { this.cookie = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("Cookie:"))
+                    {
+
+                        this.cookie = Regex.Split(line[i], "Cookie:", RegexOptions.IgnoreCase)[1];
+
+                        tag = true;
+                    }
                     if (line[i].Contains("Content-Length:")) { this.contentlength = line[i].Split(':')[1].Trim(); tag = true; }
                     if (tag.Equals(false))
                     {
