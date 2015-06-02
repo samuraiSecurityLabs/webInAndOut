@@ -42,6 +42,16 @@ namespace webAppInAndOutAnalyse
             set { rspoheader = value; }
         }
 
+        private Dictionary<int, string> implicitelements;
+
+        public Dictionary<int, string> Implicitelements
+        {
+            get { return implicitelements; }
+            set { implicitelements = value; }
+        }
+
+
+
         public Analyse(string req,Resolve cr)//原始请求和解析类作为参数传递，接下来，交给解析类
         {
             this.req = req;
@@ -53,6 +63,8 @@ namespace webAppInAndOutAnalyse
             this.rspohtml = "";
             
             Console.WriteLine("Start to analyse!");
+
+            implicitelements = new Dictionary<int, string>();
         }
 
         //把整个请求的输入点都分析到。包括cookie的解析等等，参数记得调用htmldecode还原一下
@@ -87,21 +99,34 @@ namespace webAppInAndOutAnalyse
                 //}
             }
 
-            //HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(this.rspohtml);
-            //HtmlNode htmlNode = htmlDoc.DocumentNode.SelectSingleNode("//input[@id='__VIEWSTATE']");
-            //string viewStateValue = htmlNode.Attributes["value"].Value;
-            foreach (var script in htmlDoc.DocumentNode.Descendants("script").ToArray())
-            {
-                Console.WriteLine(script);
-            }
-            //htmlNode = htmlDoc.DocumentNode.SelectSingleNode("//input[@id='__EVENTVALIDATION']");
-            //string eventValidation = htmlNode.Attributes["value"].Value;
-            //htmlNode = htmlDoc.DocumentNode.SelectSingleNode("//input[@type='submit']");
-            //string submitName = htmlNode.Attributes["name"].Value;
 
-            return outcome;
+            htmlDoc.LoadHtml(this.rspohtml);
+
+            int i = 0;
+
+            foreach (var script in htmlDoc.DocumentNode.Descendants("script").ToArray())//script
+            {
+                implicitelements.Add(i, script.OuterHtml);
+
+                i++;
+            }
+
+            foreach (var script in htmlDoc.DocumentNode.Descendants("link").ToArray())//css
+            {
+                implicitelements.Add(i, script.OuterHtml);
+
+                i++;
+            }
+
+            foreach (var script in htmlDoc.DocumentNode.Descendants("embed").ToArray())//swf
+            {
+                implicitelements.Add(i, script.OuterHtml);//隐式结果
+
+                i++;
+            }
+
+            return outcome;//显式结果
         }
 
         public void ExternalResourceInResponse(string response)//当前响应中的外部资源，除图片之外的全部抓到
@@ -119,8 +144,8 @@ namespace webAppInAndOutAnalyse
             //直接response搜索输入点
 
             HttpWebRequest req;
-            //如果是发送HTTPS请求  
 
+            //如果是发送HTTPS请求  
 
             if (Cr.Url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
             {

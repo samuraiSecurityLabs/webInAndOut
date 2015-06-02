@@ -22,6 +22,7 @@ namespace webAppInAndOutAnalyse
         private void button1_Click(object sender, EventArgs e)
         {
             this.resourceAnalyse.Text = "";
+
             if (this.httpRequestContent.Text!="" && this.httpRequestContent.Text!="粘贴觉得可疑的HTTP请求至此" )
             {
                 //输入输出点分析
@@ -72,11 +73,22 @@ namespace webAppInAndOutAnalyse
 
                 Dictionary<string, string> tmp1 = ay.Cr.Bodypars;
 
-                resourceAnalyse.Text += "body参数：("+ ay.Cr.Bodypars.Count +")\r\n";
+                resourceAnalyse.Text += "body参数:("+ ay.Cr.Bodypars.Count +")\r\n";
 
                 foreach (KeyValuePair<string, string> keys in tmp1)
                 {
                     tmp = tmp + keys.Key + "=" + keys.Value + "\r\n";
+                }
+
+                resourceAnalyse.Text += tmp;
+
+                tmp = "";
+
+                resourceAnalyse.Text += "隐式参数：\r\n";
+
+                foreach (KeyValuePair<int, string> keys in ay.Implicitelements)
+                {
+                    tmp = tmp + keys.Value + "\r\n";
                 }
 
                 resourceAnalyse.Text += tmp;

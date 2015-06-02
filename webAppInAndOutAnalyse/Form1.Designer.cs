@@ -151,7 +151,7 @@
             this.httpresponse.Location = new System.Drawing.Point(4, 7);
             this.httpresponse.Multiline = true;
             this.httpresponse.Name = "httpresponse";
-            this.httpresponse.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.httpresponse.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.httpresponse.Size = new System.Drawing.Size(483, 208);
             this.httpresponse.TabIndex = 0;
             this.httpresponse.WordWrap = false;
