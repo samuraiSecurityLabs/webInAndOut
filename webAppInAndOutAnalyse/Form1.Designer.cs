@@ -35,19 +35,19 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.resourceAnalyse = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.savaRequest = new System.Windows.Forms.Button();
-            this.clearRequest = new System.Windows.Forms.Button();
             this.findinandout = new System.Windows.Forms.TextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.httpresponse = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.httpresponseheaders = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.savaRequest = new System.Windows.Forms.Button();
+            this.clearRequest = new System.Windows.Forms.Button();
             this.tab.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -61,7 +61,7 @@
             this.httpRequestContent.Location = new System.Drawing.Point(13, 12);
             this.httpRequestContent.Multiline = true;
             this.httpRequestContent.Name = "httpRequestContent";
-            this.httpRequestContent.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.httpRequestContent.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.httpRequestContent.Size = new System.Drawing.Size(501, 189);
             this.httpRequestContent.TabIndex = 0;
             this.httpRequestContent.Text = "粘贴觉得可疑的HTTP请求至此";
@@ -123,36 +123,6 @@
             this.tabPage2.Text = "输入输出点";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.httpresponse);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(493, 221);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "响应内容";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // savaRequest
-            // 
-            this.savaRequest.Location = new System.Drawing.Point(94, 217);
-            this.savaRequest.Name = "savaRequest";
-            this.savaRequest.Size = new System.Drawing.Size(75, 23);
-            this.savaRequest.TabIndex = 3;
-            this.savaRequest.Text = "保存请求";
-            this.savaRequest.UseVisualStyleBackColor = true;
-            // 
-            // clearRequest
-            // 
-            this.clearRequest.Location = new System.Drawing.Point(175, 217);
-            this.clearRequest.Name = "clearRequest";
-            this.clearRequest.Size = new System.Drawing.Size(75, 23);
-            this.clearRequest.TabIndex = 4;
-            this.clearRequest.Text = "清空";
-            this.clearRequest.UseVisualStyleBackColor = true;
-            this.clearRequest.Click += new System.EventHandler(this.clearRequest_Click);
-            // 
             // findinandout
             // 
             this.findinandout.Enabled = false;
@@ -164,6 +134,17 @@
             this.findinandout.Size = new System.Drawing.Size(480, 208);
             this.findinandout.TabIndex = 0;
             this.findinandout.WordWrap = false;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.httpresponse);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(493, 221);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "响应内容";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // httpresponse
             // 
@@ -211,31 +192,13 @@
             this.tabPage5.Text = "PayLoad";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // richTextBox1
             // 
-            this.button2.Location = new System.Drawing.Point(440, 33);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(47, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "删除";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(7, 4);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(427, 48);
-            this.textBox1.TabIndex = 2;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(440, 4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(47, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "保存";
-            this.button3.UseVisualStyleBackColor = true;
+            this.richTextBox1.Location = new System.Drawing.Point(3, 75);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(484, 140);
+            this.richTextBox1.TabIndex = 6;
+            this.richTextBox1.Text = "";
             // 
             // label1
             // 
@@ -246,13 +209,50 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "现有Payload";
             // 
-            // richTextBox1
+            // button3
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(3, 75);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(484, 140);
-            this.richTextBox1.TabIndex = 6;
-            this.richTextBox1.Text = "";
+            this.button3.Location = new System.Drawing.Point(440, 4);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(47, 23);
+            this.button3.TabIndex = 3;
+            this.button3.Text = "保存";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(7, 4);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(427, 48);
+            this.textBox1.TabIndex = 2;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(440, 33);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(47, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "删除";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // savaRequest
+            // 
+            this.savaRequest.Location = new System.Drawing.Point(94, 217);
+            this.savaRequest.Name = "savaRequest";
+            this.savaRequest.Size = new System.Drawing.Size(75, 23);
+            this.savaRequest.TabIndex = 3;
+            this.savaRequest.Text = "保存请求";
+            this.savaRequest.UseVisualStyleBackColor = true;
+            // 
+            // clearRequest
+            // 
+            this.clearRequest.Location = new System.Drawing.Point(175, 217);
+            this.clearRequest.Name = "clearRequest";
+            this.clearRequest.Size = new System.Drawing.Size(75, 23);
+            this.clearRequest.TabIndex = 4;
+            this.clearRequest.Text = "清空";
+            this.clearRequest.UseVisualStyleBackColor = true;
+            this.clearRequest.Click += new System.EventHandler(this.clearRequest_Click);
             // 
             // mainForm
             // 
