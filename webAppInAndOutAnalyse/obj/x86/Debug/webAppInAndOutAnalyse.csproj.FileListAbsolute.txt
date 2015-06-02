@@ -7,3 +7,6 @@ N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\obj\x86\Debug\Gener
 N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\obj\x86\Debug\webAppInAndOutAnalyse.exe
 N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\obj\x86\Debug\webAppInAndOutAnalyse.pdb
 N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\obj\x86\Debug\webAppInAndOutAnalyse.mainForm.resources
+N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\bin\Debug\HtmlAgilityPack.dll
+N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\bin\Debug\HtmlAgilityPack.pdb
+N:\CSharpProject\webAppInAndOutAnalyse\webAppInAndOutAnalyse\bin\Debug\HtmlAgilityPack.xml

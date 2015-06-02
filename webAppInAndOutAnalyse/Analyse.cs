@@ -7,6 +7,7 @@ using System.IO;
 using System.Collections;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using HtmlAgilityPack;
 
 namespace webAppInAndOutAnalyse
 {
@@ -64,7 +65,7 @@ namespace webAppInAndOutAnalyse
             
             foreach (KeyValuePair<string, string> keys in Cr.Headerpars)//查找的效率较低，要优化
             {
-                if (this.rspohtml.IndexOf(keys.Value) >= 0)
+                if (!keys.Value.Equals(String.Empty) && this.rspohtml.IndexOf(keys.Value) >= 0)
                 {
                     outcome.Add("Header" + keys.Key, keys.Value);
                 }
@@ -72,7 +73,7 @@ namespace webAppInAndOutAnalyse
 
             foreach (KeyValuePair<string, string> keys in Cr.Bodypars)
             {
-                if (this.rspohtml.IndexOf(keys.Value) >= 0)
+                if (!keys.Value.Equals(String.Empty) && this.rspohtml.IndexOf(keys.Value) >= 0)
                 {
                     outcome.Add("Body" + keys.Key, keys.Value);
                 }
@@ -80,11 +81,25 @@ namespace webAppInAndOutAnalyse
 
             foreach (KeyValuePair<string, string> keys in Cr.CookieList)
             {
-                if (this.rspohtml.IndexOf(keys.Value) >= 0)
-                {
-                    outcome.Add("Cookie" + keys.Key, keys.Value);
-                }
+                //if (!keys.Value.Equals(String.Empty) && this.rspohtml.IndexOf(keys.Value) >= 0)
+                //{
+                //    outcome.Add("Cookie" + keys.Key, keys.Value);
+                //}
             }
+
+            //HtmlWeb htmlWeb = new HtmlWeb();
+            HtmlDocument htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(this.rspohtml);
+            //HtmlNode htmlNode = htmlDoc.DocumentNode.SelectSingleNode("//input[@id='__VIEWSTATE']");
+            //string viewStateValue = htmlNode.Attributes["value"].Value;
+            foreach (var script in htmlDoc.DocumentNode.Descendants("script").ToArray())
+            {
+                Console.WriteLine(script);
+            }
+            //htmlNode = htmlDoc.DocumentNode.SelectSingleNode("//input[@id='__EVENTVALIDATION']");
+            //string eventValidation = htmlNode.Attributes["value"].Value;
+            //htmlNode = htmlDoc.DocumentNode.SelectSingleNode("//input[@type='submit']");
+            //string submitName = htmlNode.Attributes["name"].Value;
 
             return outcome;
         }
@@ -105,6 +120,8 @@ namespace webAppInAndOutAnalyse
 
             HttpWebRequest req;
             //如果是发送HTTPS请求  
+
+
             if (Cr.Url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
             {
                 ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
@@ -112,17 +129,43 @@ namespace webAppInAndOutAnalyse
                 req = (HttpWebRequest)WebRequest.Create(Cr.Url);
 
                 req.ProtocolVersion = HttpVersion.Version10;
+
+                req.Host = Cr.Host;
+
             }
             else
             {
                 req = (HttpWebRequest)WebRequest.Create(Cr.Url);
+
+                req.Host = Cr.Host;
+
             }
+
+            //Encoding encoding = Encoding.UTF8;
+
+            req.UserAgent = Cr.Useragent;
 
             req.Method = Cr.Method;
 
-            req.Host = Cr.Host;
+            req.Accept = "text/html, application/xhtml+xml, */*";
 
-            req.UserAgent = Cr.Useragent;
+            //req.TransferEncoding = "gzip, deflate";
+
+            if (Cr.Method.Equals("POST"))
+            { 
+                 req.ContentType = Cr.Contenttype;
+
+                 req.Timeout = 20000;
+ 
+                 byte[] btBodys = Encoding.UTF8.GetBytes(Cr.Body);
+                 
+                 req.ContentLength = Convert.ToInt16(Cr.Contentlength);
+                 
+                 req.GetRequestStream().Write(btBodys, 0, btBodys.Length);
+
+            }
+
+
 
             //req.ContentType = cr.Contenttype;
 
@@ -130,12 +173,10 @@ namespace webAppInAndOutAnalyse
 
             req.AllowAutoRedirect = false;
 
-            req.ContentLength = Convert.ToInt16(Cr.Contentlength);
-
             CookieContainer cc = new CookieContainer();
 
             req.CookieContainer = cc;
-
+            
             foreach (KeyValuePair<string, string> keys in Cr.CookieList)//这里有异常cookie的隐患
             {
                 try

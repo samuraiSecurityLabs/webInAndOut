@@ -43,7 +43,6 @@ namespace webAppInAndOutAnalyse
 
                 findinandout.Text += tmp;
                 
-
                 //资源分析
 
                 resourceAnalyse.ForeColor = Color.Red;

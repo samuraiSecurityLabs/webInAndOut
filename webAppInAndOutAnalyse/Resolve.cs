@@ -197,7 +197,11 @@ namespace webAppInAndOutAnalyse
 
                     if (line[i].Contains("Host:")) { this.host = line[i].Split(':')[1].Trim(); tag = true; }
                     if (line[i].Contains("Connection:")) { this.connection = line[i].Split(':')[1].Trim(); tag = true; }
-                    if (line[i].Contains("User-Agent:")) { this.useragent = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("User-Agent:"))
+                    {
+                        this.useragent = Regex.Split(line[i], "User-Agent:", RegexOptions.IgnoreCase)[1].Trim();
+                        tag = true;
+                    }
                     if (line[i].Contains("Referer:")) 
                     {
                         this.referer = Regex.Split(line[i], "Referer:", RegexOptions.IgnoreCase)[1].Trim(); 
@@ -227,7 +231,11 @@ namespace webAppInAndOutAnalyse
 
                     if (line[i].Contains("Host:")) { this.host = line[i].Split(':')[1].Trim(); tag = true; }
                     if (line[i].Contains("Connection:")) { this.connection = line[i].Split(':')[1].Trim(); tag = true; }
-                    if (line[i].Contains("User-Agent:")) { this.useragent = line[i].Split(':')[1].Trim(); tag = true; }
+                    if (line[i].Contains("User-Agent:")) 
+                    { 
+                        this.useragent = Regex.Split(line[i], "User-Agent:", RegexOptions.IgnoreCase)[1].Trim();
+                        tag = true;
+                    }
                     if (line[i].Contains("Referer:"))
                     {
                         this.referer = Regex.Split(line[i], "Referer:", RegexOptions.IgnoreCase)[1].Trim();
@@ -259,7 +267,12 @@ namespace webAppInAndOutAnalyse
 
                 foreach (string par in pars)
                 {
-                    this.headerpars.Add(par.Split('=')[0].Trim(), par.Split('=')[1].Trim());
+                    //GET s?ie=utf-8&mod=1&isbd=1&isid=bdf6c84b000e5dbb&ie=utf-8&f=3&rsv_bp=1&rsv_idx=1&tn=baidu&wd=httpwebrequest%20post&rsv_pq=bdf6c84b000e5dbb&rsv_t=5e2fUXjJ0d1BrkdEfSjzse%2FaERaq2XZKz77aNIWX7oGJO4Kd7FqJYbzP2T8&rsv_enter=0&oq=httpwebre&inputT=5434&sug=httpwebrequest&rsv_sug3=40&rsv_sug1=24&rsp=0&rsv_sug4=1425&bs=httpwebrequest%20post&rsv_sid=14351_1423_7477_14511_12824_10212_12868_10562_14502_12722_14547_14244_11604_14370_8498&_ss=1&clist=&hsug=&f4s=1&csor=19&_cr1=37520 
+                    //有些请求中包含了重复参数，如ie=utf-8 2次，导致添加不了，所以要加判断。
+                    if (this.headerpars.ContainsKey(par) == false)
+                    {
+                        this.headerpars.Add(par.Split('=')[0].Trim(), par.Split('=')[1].Trim());
+                    }
                 }
             }
 
@@ -270,7 +283,10 @@ namespace webAppInAndOutAnalyse
 
                 foreach (string par in pars)
                 {
+                    if(this.bodypars.ContainsKey(par) == false)
+                    {
                     this.bodypars.Add(par.Split('=')[0].Trim(), par.Split('=')[1].Trim());
+                    }
                 }
             }
 
@@ -281,20 +297,34 @@ namespace webAppInAndOutAnalyse
 
                 foreach (string tt in t)
                 {
-                    if (SubstringCount(tt, "=") > 1)
+                    //if (this.cookieList.ContainsKey(tt) == false)
+                    //{
+                    //    if (SubstringCount(tt, "=") > 1)
+                    //    { //异常cookie，如：__gads=ID=92bf8cb62cc36be5:T=1431422228:S=ALNI_Ma9riYEUPDWLlhtxe6ip1TA9M5nag; 
+                    //        //取第一个参数__gads
+                    //        this.cookieList.Add("Abnormal" + tt.Split('=')[0].Trim(), tt); //异常cookie前面增加Abnormal标记
+                    //    }
 
-                    { //异常cookie，如：__gads=ID=92bf8cb62cc36be5:T=1431422228:S=ALNI_Ma9riYEUPDWLlhtxe6ip1TA9M5nag; 
-                      //取第一个参数__gads
-                        this.cookieList.Add("Abnormal" + tt.Split('=')[0].Trim(), tt); //异常cookie前面增加Abnormal标记
+                    //    else
+                    //    {
+                    //        String[] tmp = tt.Split('='); //正常情况  key=value;
+
+                    //        this.cookieList.Add(tmp[0].Trim(), tmp[1].Trim());//debug
+                    //    }
+                    //}
+
+                    if (!string.IsNullOrEmpty(tt))
+                    {
+                        if (tt.IndexOf('=') > 1)
+                        {
+                            this.cookieList.Add(tt.Split('=')[0].Trim(), tt.Substring(tt.IndexOf('='), tt.Length-tt.IndexOf('=')).Substring(1));
+                        }
                     }
-
                     else
                     {
-                        String[] tmp = tt.Split('='); //正常情况  key=value;
 
-                        this.cookieList.Add(tmp[0].Trim(), tmp[1].Trim());//debug
+                        throw new ArgumentException("参数不合法");
                     }
-
                 }
 
             }
