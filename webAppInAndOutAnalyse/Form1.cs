@@ -32,11 +32,11 @@ namespace webAppInAndOutAnalyse
                 string tmp = "";
 
                 string content = httpRequestContent.Text;
-               
-                Resolve cr= new Resolve();//初始化一个解析器
 
-                Analyse ay = new Analyse(content, cr);//初始化一个分析器
-              
+                Fuzzing fuz = new Fuzzing();
+
+                Analyse ay = fuz.FuzzingResponse(content);
+  
                 //资源分析
 
                 resourceAnalyse.ForeColor = Color.Red;
@@ -76,6 +76,15 @@ namespace webAppInAndOutAnalyse
                 resourceAnalyse.Text += tmp;
 
                 tmp = "";
+                
+                resourceAnalyse.Text += "显示：\r\n";
+
+                foreach (KeyValuePair<string, string> keys in ay.Extrinsicelements)
+                {
+                    tmp = tmp + keys.Value + "\r\n";
+                }
+
+                resourceAnalyse.Text += tmp;
 
                 resourceAnalyse.Text += "隐式参数：\r\n";
 
@@ -97,11 +106,6 @@ namespace webAppInAndOutAnalyse
                 httpresponseheaders.Text = "";
 
                 httpresponseheaders.Text = ay.Rspoheader;
-
-
-                Fuzzing fuz = new Fuzzing();
-
-                fuz.FuzzingResponse(content);
 
             }
         }

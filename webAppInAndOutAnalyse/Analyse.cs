@@ -78,7 +78,7 @@ namespace webAppInAndOutAnalyse
  
         //把整个请求的输入点都分析到。包括cookie的解析等等，参数记得调用htmldecode还原一下
 
-        public void ResponseAnalysis(Resolve Cr)//分析当前Cr的响应体，仅仅针对于显示的能够直接在源码中看到。
+        public void ResponseAnalysis(Resolve Cr)//分析当前Cr的响应体。
         {
             GetHttpResponse(Cr);//初始化了rspohtml
             
