@@ -29,7 +29,7 @@ namespace webAppInAndOutAnalyse
                 
                 fsl.ResolveHttpRequest(req);//对请求重新定义
 
-                fay.ResponseAnalysis(fsl);//分析特定请求的响应分析
+                fay.ResponseAnalysis(fsl,keys,"Header");//分析特定请求的响应分析
 
                 loghelper.WriteLine(fay.Rspohtml);
 
@@ -47,7 +47,7 @@ namespace webAppInAndOutAnalyse
                 
                 fsl.ResolveHttpRequest(req);//对请求重新定义
 
-                fay.ResponseAnalysis(fsl);//分析特定请求的响应分析
+                fay.ResponseAnalysis(fsl, keys, "Cookie");//分析特定请求的响应分析
 
                 loghelper.WriteLine(fay.Rspohtml);
 
@@ -65,7 +65,7 @@ namespace webAppInAndOutAnalyse
 
                 fsl.ResolveHttpRequest(req);//对请求重新定义
 
-                fay.ResponseAnalysis(fsl);//分析特定请求的响应分析
+                fay.ResponseAnalysis(fsl, keys, "Body");//分析特定请求的响应分析
 
                 loghelper.WriteLine(fay.Rspohtml);
 

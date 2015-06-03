@@ -78,79 +78,89 @@ namespace webAppInAndOutAnalyse
  
         //把整个请求的输入点都分析到。包括cookie的解析等等，参数记得调用htmldecode还原一下
 
-        public void ResponseAnalysis(Resolve Cr)//分析当前Cr的响应体。
+        public void ResponseAnalysis(Resolve Cr, KeyValuePair<string, string> keys,string position)//分析当前Cr的响应体。
         {
             GetHttpResponse(Cr);//初始化了rspohtml
             
-            foreach (KeyValuePair<string, string> keys in Cr.Headerpars)//查找的效率较低，要优化
+            //foreach (KeyValuePair<string, string> keys in Cr.Headerpars)//查找的效率较低，要优化
+            //{
+            //    if (!keys.Value.Equals(String.Empty) && (this.rspohtml.IndexOf(keys.Value) >= 0 || this.rspohtml.IndexOf("samuraiLabs") >= 0))//考虑到被过滤<>\情形
+            //    {
+            //        if (extrinsicelements.ContainsKey("[Header]" + keys.Key) ==  false)//如果key已经存在了，则不再添加。
+            //        {
+            //            extrinsicelements.Add("[Header]" + keys.Key, keys.Value);
+            //        }
+            //    }
+            //}
+
+            if (this.rspohtml.IndexOf("samuraiLabs") >= 0)//考虑到被过滤<>\情形
             {
-                if (!keys.Value.Equals(String.Empty) && this.rspohtml.IndexOf(keys.Value) >= 0)
+                if (extrinsicelements.ContainsKey("[Header]" + keys.Key) == false)//如果key已经存在了，则不再添加。
                 {
-                    if (extrinsicelements.ContainsKey(keys.Key))//如果key已经存在了，则不再添加。
-                    {
-                        extrinsicelements.Add("[Header]" + keys.Key, keys.Value);
-                    }
+                    extrinsicelements.Add("[Header]" + keys.Key, keys.Value);
                 }
             }
 
-            foreach (KeyValuePair<string, string> keys in Cr.Bodypars)
-            {
-                if (!keys.Value.Equals(String.Empty) && this.rspohtml.IndexOf(keys.Value) >= 0)
-                {
-                    if (extrinsicelements.ContainsKey(keys.Key))
-                    {
-                        extrinsicelements.Add("[Body]" + keys.Key, keys.Value);
-                    }
-                }
-            }
+            //foreach (KeyValuePair<string, string> keys in Cr.Bodypars)
+            //{
+            //    if (!keys.Value.Equals(String.Empty) && (this.rspohtml.IndexOf(keys.Value) >= 0 || this.rspohtml.IndexOf("samuraiLabs") >= 0))
+            //    {
+            //        if (extrinsicelements.ContainsKey("[Body]" + keys.Key) ==  false)
+            //        {
+            //            extrinsicelements.Add("[Body]" + keys.Key, keys.Value);
+            //        }
+            //    }
+            //}
 
-            foreach (KeyValuePair<string, string> keys in Cr.CookieList)
-            {
-                if (!keys.Value.Equals(String.Empty) && this.rspohtml.IndexOf(keys.Value) >= 0)
-                {
-                    if (extrinsicelements.ContainsKey(keys.Key))
-                    {
-                        extrinsicelements.Add("[Cookie]" + keys.Key, keys.Value);
-                    }
-                }
-            }
+            //foreach (KeyValuePair<string, string> keys in Cr.CookieList)
+            //{
+            //    if (!keys.Value.Equals(String.Empty) && (this.rspohtml.IndexOf(keys.Value) >= 0 || this.rspohtml.IndexOf("samuraiLabs") >= 0))
+            //    {
+            //        if (extrinsicelements.ContainsKey("[Cookie]" + keys.Key)==false)
+            //        {
+            //            extrinsicelements.Add("[Cookie]" + keys.Key, keys.Value);
+            //        }
+            //    }
+            //}
 
             HtmlDocument htmlDoc = new HtmlDocument();
 
             htmlDoc.LoadHtml(this.rspohtml);
 
-            int i = 0;
+            //int i = 0;
 
-            foreach (var script in htmlDoc.DocumentNode.Descendants("script").ToArray())//script
-            {
-                implicitelements.Add(i, script.OuterHtml);//隐式结果
+            //foreach (var script in htmlDoc.DocumentNode.Descendants("script").ToArray())//script
+            //{
+            //    if (implicitelements.ContainsKey(keys.Key))
+            //    {
+            //        implicitelements.Add(i, script.OuterHtml);//隐式结果
+            //    }
+            //    i++;
+            //}
 
-                i++;
-            }
+            //foreach (var script in htmlDoc.DocumentNode.Descendants("link").ToArray())//css
+            //{
+            //    implicitelements.Add(i, script.OuterHtml);//隐式结果
 
-            foreach (var script in htmlDoc.DocumentNode.Descendants("link").ToArray())//css
-            {
-                implicitelements.Add(i, script.OuterHtml);//隐式结果
+            //    i++;
+            //}
 
-                i++;
-            }
+            //foreach (var script in htmlDoc.DocumentNode.Descendants("embed").ToArray())//swf
+            //{
+            //    implicitelements.Add(i, script.OuterHtml);//隐式结果
 
-            foreach (var script in htmlDoc.DocumentNode.Descendants("embed").ToArray())//swf
-            {
-                implicitelements.Add(i, script.OuterHtml);//隐式结果
+            //    i++;
+            //}
 
-                i++;
-            }
+            //if (htmlDoc.DocumentNode.SelectNodes("//comment()") != null)
+            //{
+            //    foreach (var comment in htmlDoc.DocumentNode.SelectNodes("//comment()").ToArray())//注释
+            //    {
+            //        implicitelements.Add(i, comment.OuterHtml);//隐式结果
 
-            if (htmlDoc.DocumentNode.SelectNodes("//comment()") != null)
-            {
-                foreach (var comment in htmlDoc.DocumentNode.SelectNodes("//comment()").ToArray())//注释
-                {
-                    implicitelements.Add(i, comment.OuterHtml);//隐式结果
-
-                    i++;
-                }
-            }
+            //        i++;
+            //    }
+            //}
 
         }
 
@@ -199,7 +209,13 @@ namespace webAppInAndOutAnalyse
 
             req.Accept = "text/html, application/xhtml+xml, */*";
 
+            req.Referer = Cr.Referer;
+
+            req.AllowAutoRedirect = false;
+
             //req.TransferEncoding = "gzip, deflate";
+
+            req.Headers.Add("Cookie:" + Cr.Cookie); //不加这句，POST请求没有COOKIE字段 
 
             if (Cr.Method.Equals("POST"))
             { 
@@ -209,7 +225,7 @@ namespace webAppInAndOutAnalyse
  
                  byte[] btBodys = Encoding.UTF8.GetBytes(Cr.Body);
                  
-                 req.ContentLength = Convert.ToInt16(Cr.Contentlength);
+                 req.ContentLength = Convert.ToInt16(cr.Body.Length);//每次变换参数后都要获得BODY长度
                  
                  req.GetRequestStream().Write(btBodys, 0, btBodys.Length);
 
@@ -217,25 +233,23 @@ namespace webAppInAndOutAnalyse
 
             //req.ContentType = cr.Contenttype;
 
-            req.Referer = Cr.Referer;
-
-            req.AllowAutoRedirect = false;
-
-            CookieContainer cc = new CookieContainer();
-
-            req.CookieContainer = cc;
+            //CookieContainer cc = new CookieContainer();
             
-            foreach (KeyValuePair<string, string> keys in Cr.CookieList)//这里有异常cookie的隐患
-            {
-                try
-                {
-                    cc.Add(new Uri(Cr.Url), new Cookie(keys.Key, keys.Value));//这里会new特别多的cookie对象，必须后续优化掉！
-                }
-                catch (Exception e)
-                {
-                    //要捕捉下，否则报错。因为COOKIE有限制
-                }
-            }
+            //foreach (KeyValuePair<string, string> keys in Cr.CookieList)
+            //{
+            //    try
+            //    {
+            //        cc.Add(new Uri(Cr.Url), new Cookie(keys.Key, keys.Value));//这里会new特别多的cookie对象，必须后续优化掉！
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        //要捕捉下，否则报错。因为COOKIE有限制
+            //    }
+            //}
+
+            //req.CookieContainer = cc;//接受返回的cookie         
+   
+            //cookiestr =  request.CookieContainer.GetCookieHeader(request.RequestUri);  
 
             HttpWebResponse rspo = (HttpWebResponse)req.GetResponse();
 

@@ -31,8 +31,7 @@ namespace webAppInAndOutAnalyse
             get { return method; }
             set { method = value; }
         }
-
-
+        
         private string url;
 
         public string Url
@@ -92,7 +91,6 @@ namespace webAppInAndOutAnalyse
             set { contentlength = value; }
         }
 
-
         private string body;
 
         public string Body
@@ -108,8 +106,6 @@ namespace webAppInAndOutAnalyse
             get { return contenttype; }
             set { contenttype = value; }
         }
-
-
 
         private Dictionary<string, string> cookieList;
 
@@ -144,6 +140,14 @@ namespace webAppInAndOutAnalyse
             set { bodypars = value; }
         }
 
+        private string currentreq;
+
+        public string Currentreq
+        {
+            get { return currentreq; }
+            set { currentreq = value; }
+        }
+
         public Resolve()
         {
             this.otherheaders = "";
@@ -167,17 +171,8 @@ namespace webAppInAndOutAnalyse
         
         public void ResolveHttpRequest(string httprequest)//解析请求方法解析请求后，对http等属性进行赋值。
         {
-            /*
-            GET http://avatar.csdn.net/A/A/2/3_zhangzhennan1989.jpg HTTP/1.1
-            Host: avatar.csdn.net
-            Connection: keep-alive
-            Accept: image/webp,**;q=0.8
-            User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
-            Referer: http://blog.csdn.net/zhoufoxcn/article/details/6404236
-            Accept-Encoding: gzip, deflate, sdch
-            Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
-            Cookie: CloudGuest=U0ibguNE7DP9khMOyBt3I486oh1cz4kaFNY7byGH50A2VSmWXxDkmbOQAFUOWyyt73vzZ85/IbAXsCqW7fkEtoYBgCZ2XHxXt3qqgsxpoO4QtZx0bmTfo4/J8tz9VowFC2L8HdIADLMZOemVietcKjxQ2tHh+tA+0akCV1cFHDoXZ6xkYS9phRH1f5r7iSjd; uuid_tt_dd=-5728114581253503220_20150512; __gads=ID=92bf8cb62cc36be5:T=1431422228:S=ALNI_Ma9riYEUPDWLlhtxe6ip1TA9M5nag; __qca=P0-1870644198-1432092710731; _JQCMT_browser=18e39eecb67da78defe5ebf1f4d79383; __message_district_code=000000; _JQCMT_ifcookie=1; sid=00lx3une2jnjtidpdovzsini; lzstat_uv=35731125342580460042|3432968@2831342; lzstat_ss=2146225042_0_1432906774_2831342; dc_tos=np3jpy; __utmt=1; __utma=17226283.1130300211.1431422081.1432867432.1432877976.45; __utmb=17226283.1.10.1432877976; __utmc=17226283; __utmz=17226283.1432877976.45.44.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); dc_session_id=1432877974318; __message_sys_msg_id=0; __message_gu_msg_id=0; __message_cnel_msg_id=0; __message_in_school=0
-            */
+            this.currentreq = httprequest;//存储当前的req的原文
+
             Boolean tag;
 
             tag = false;

@@ -76,24 +76,24 @@ namespace webAppInAndOutAnalyse
                 resourceAnalyse.Text += tmp;
 
                 tmp = "";
-                
-                resourceAnalyse.Text += "显示：\r\n";
+
+                findinandout.Text += "显式参数：\r\n";
 
                 foreach (KeyValuePair<string, string> keys in ay.Extrinsicelements)
                 {
-                    tmp = tmp + keys.Value + "\r\n";
+                    tmp = tmp + keys.Key + "=" +keys.Value + "\r\n";
                 }
 
-                resourceAnalyse.Text += tmp;
+                findinandout.Text += tmp;
 
-                resourceAnalyse.Text += "隐式参数：\r\n";
+                findinandout.Text += "隐式参数：\r\n";
 
                 foreach (KeyValuePair<int, string> keys in ay.Implicitelements)
                 {
-                    tmp = tmp + keys.Value + "\r\n";
+                    tmp = tmp + keys.Key + "=" + keys.Value + "\r\n";
                 }
 
-                resourceAnalyse.Text += tmp;
+                findinandout.Text += tmp;
 
                 //响应内容
 
