@@ -1,1 +1,189 @@
-﻿
+﻿[2015-06-03 17:58:47] POST http://www.sgs.gov.cn/lz/etpsInfo.do?method=<samuraiLabs\> HTTP/1.1
+Host: www.sgs.gov.cn
+Connection: keep-alive
+Content-Length: 27
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Origin: http://www.sgs.gov.cn
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Referer: http://www.sgs.gov.cn/lz/etpsInfo.do?method=index
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+Cookie: JSESSIONID=0000TNMPqjg5Z13pJlP7kALA57s:139u0tqtd; JSESSIONIDshaic=0000n6Byvt5tH9D_kgsfYRpNDu7:16fa6duvc; JSESSIONIDlz=00000ipxcXbXmnyFkyTnjWdPIK3:16f9u5edl; _gscu_993197171=33238614gp4uxp29; _gscs_993197171=t33315054vjxc4j83|pv:26; _gscbrs_993197171=1
+
+searchType=1&keyWords=xxxxx
+[2015-06-03 17:59:43] POST http://www.sgs.gov.cn/lz/etpsInfo.do?method=<samuraiLabs\> HTTP/1.1
+Host: www.sgs.gov.cn
+Connection: keep-alive
+Content-Length: 27
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Origin: http://www.sgs.gov.cn
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Referer: http://www.sgs.gov.cn/lz/etpsInfo.do?method=index
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+Cookie: JSESSIONID=0000TNMPqjg5Z13pJlP7kALA57s:139u0tqtd; JSESSIONIDshaic=0000n6Byvt5tH9D_kgsfYRpNDu7:16fa6duvc; JSESSIONIDlz=00000ipxcXbXmnyFkyTnjWdPIK3:16f9u5edl; _gscu_993197171=33238614gp4uxp29; _gscs_993197171=t33315054vjxc4j83|pv:26; _gscbrs_993197171=1
+
+searchType=1&keyWords=xxxxx
+[2015-06-03 18:00:42] POST http://www.sgs.gov.cn/lz/etpsInfo.do?method=<samuraiLabs\> HTTP/1.1
+Host: www.sgs.gov.cn
+Connection: keep-alive
+Content-Length: 27
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Origin: http://www.sgs.gov.cn
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Referer: http://www.sgs.gov.cn/lz/etpsInfo.do?method=index
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+Cookie: JSESSIONID=0000TNMPqjg5Z13pJlP7kALA57s:139u0tqtd; JSESSIONIDshaic=0000n6Byvt5tH9D_kgsfYRpNDu7:16fa6duvc; JSESSIONIDlz=00000ipxcXbXmnyFkyTnjWdPIK3:16f9u5edl; _gscu_993197171=33238614gp4uxp29; _gscs_993197171=t33315054vjxc4j83|pv:26; _gscbrs_993197171=1
+
+searchType=1&keyWords=xxxxx
+[2015-06-03 18:01:09] POST http://www.sgs.gov.cn/lz/etpsInfo.do?method=<samuraiLabs\> HTTP/1.1
+Host: www.sgs.gov.cn
+Connection: keep-alive
+Content-Length: 27
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Origin: http://www.sgs.gov.cn
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Referer: http://www.sgs.gov.cn/lz/etpsInfo.do?method=index
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+Cookie: JSESSIONID=0000TNMPqjg5Z13pJlP7kALA57s:139u0tqtd; JSESSIONIDshaic=0000n6Byvt5tH9D_kgsfYRpNDu7:16fa6duvc; JSESSIONIDlz=00000ipxcXbXmnyFkyTnjWdPIK3:16f9u5edl; _gscu_993197171=33238614gp4uxp29; _gscs_993197171=t33315054vjxc4j83|pv:26; _gscbrs_993197171=1
+
+searchType=1&keyWords=xxxxx
+[2015-06-03 18:01:09] 
+[2015-06-03 18:01:09] POST http://www.sgs.gov.cn/lz/etpsInfo.do?method=doSearch HTTP/1.1
+Host: www.sgs.gov.cn
+Connection: keep-alive
+Content-Length: 27
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Origin: http://www.sgs.gov.cn
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Referer: http://www.sgs.gov.cn/lz/etpsInfo.do?method=index
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+Cookie: JSESSIONID=<samuraiLabs\>; JSESSIONIDshaic=0000n6Byvt5tH9D_kgsfYRpNDu7:16fa6duvc; JSESSIONIDlz=00000ipxcXbXmnyFkyTnjWdPIK3:16f9u5edl; _gscu_993197171=33238614gp4uxp29; _gscs_993197171=t33315054vjxc4j83|pv:26; _gscbrs_993197171=1
+
+searchType=1&keyWords=xxxxx
+[2015-06-03 18:01:10] 
+[2015-06-03 18:01:10] POST http://www.sgs.gov.cn/lz/etpsInfo.do?method=doSearch HTTP/1.1
+Host: www.sgs.gov.cn
+Connection: keep-alive
+Content-Length: 27
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Origin: http://www.sgs.gov.cn
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Referer: http://www.sgs.gov.cn/lz/etpsInfo.do?method=index
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+Cookie: JSESSIONID=0000TNMPqjg5Z13pJlP7kALA57s:139u0tqtd; JSESSIONIDshaic=<samuraiLabs\>; JSESSIONIDlz=00000ipxcXbXmnyFkyTnjWdPIK3:16f9u5edl; _gscu_993197171=33238614gp4uxp29; _gscs_993197171=t33315054vjxc4j83|pv:26; _gscbrs_993197171=1
+
+searchType=1&keyWords=xxxxx
+[2015-06-03 18:01:10] 
+[2015-06-03 18:01:10] POST http://www.sgs.gov.cn/lz/etpsInfo.do?method=doSearch HTTP/1.1
+Host: www.sgs.gov.cn
+Connection: keep-alive
+Content-Length: 27
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Origin: http://www.sgs.gov.cn
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Referer: http://www.sgs.gov.cn/lz/etpsInfo.do?method=index
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+Cookie: JSESSIONID=0000TNMPqjg5Z13pJlP7kALA57s:139u0tqtd; JSESSIONIDshaic=0000n6Byvt5tH9D_kgsfYRpNDu7:16fa6duvc; JSESSIONIDlz=<samuraiLabs\>; _gscu_993197171=33238614gp4uxp29; _gscs_993197171=t33315054vjxc4j83|pv:26; _gscbrs_993197171=1
+
+searchType=1&keyWords=xxxxx
+[2015-06-03 18:01:11] 
+[2015-06-03 18:01:11] POST http://www.sgs.gov.cn/lz/etpsInfo.do?method=doSearch HTTP/1.1
+Host: www.sgs.gov.cn
+Connection: keep-alive
+Content-Length: 27
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Origin: http://www.sgs.gov.cn
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Referer: http://www.sgs.gov.cn/lz/etpsInfo.do?method=index
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+Cookie: JSESSIONID=0000TNMPqjg5Z13pJlP7kALA57s:139u0tqtd; JSESSIONIDshaic=0000n6Byvt5tH9D_kgsfYRpNDu7:16fa6duvc; JSESSIONIDlz=00000ipxcXbXmnyFkyTnjWdPIK3:16f9u5edl; _gscu_993197171=<samuraiLabs\>; _gscs_993197171=t33315054vjxc4j83|pv:26; _gscbrs_993197171=1
+
+searchType=1&keyWords=xxxxx
+[2015-06-03 18:01:11] 
+[2015-06-03 18:01:11] POST http://www.sgs.gov.cn/lz/etpsInfo.do?method=doSearch HTTP/1.1
+Host: www.sgs.gov.cn
+Connection: keep-alive
+Content-Length: 27
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Origin: http://www.sgs.gov.cn
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Referer: http://www.sgs.gov.cn/lz/etpsInfo.do?method=index
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+Cookie: JSESSIONID=0000TNMPqjg5Z13pJlP7kALA57s:139u0tqtd; JSESSIONIDshaic=0000n6Byvt5tH9D_kgsfYRpNDu7:16fa6duvc; JSESSIONIDlz=00000ipxcXbXmnyFkyTnjWdPIK3:16f9u5edl; _gscu_993197171=33238614gp4uxp29; _gscs_993197171=<samuraiLabs\>; _gscbrs_993197171=1
+
+searchType=1&keyWords=xxxxx
+[2015-06-03 18:01:12] 
+[2015-06-03 18:01:12] POST http://www.sgs.gov.cn/lz/etpsInfo.do?method=doSearch HTTP/1.1
+Host: www.sgs.gov.cn
+Connection: keep-alive
+Content-Length: 27
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Origin: http://www.sgs.gov.cn
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Referer: http://www.sgs.gov.cn/lz/etpsInfo.do?method=index
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+Cookie: JSESSIONID=0000TNMPqjg5Z13pJlP7kALA57s:139u0tqtd; JSESSIONIDshaic=0000n6Byvt5tH9D_kgsfYRpNDu7:16fa6duvc; JSESSIONIDlz=00000ipxcXbXmnyFkyTnjWdPIK3:16f9u5edl; _gscu_993197171=33238614gp4uxp29; _gscs_993197171=t33315054vjxc4j83|pv:26; _gscbrs_993197171=<samuraiLabs\>
+
+searchType=1&keyWords=xxxxx
+[2015-06-03 18:01:13] 
+[2015-06-03 18:01:13] POST http://www.sgs.gov.cn/lz/etpsInfo.do?method=doSearch HTTP/1.1
+Host: www.sgs.gov.cn
+Connection: keep-alive
+Content-Length: 27
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Origin: http://www.sgs.gov.cn
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Referer: http://www.sgs.gov.cn/lz/etpsInfo.do?method=index
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+Cookie: JSESSIONID=0000TNMPqjg5Z13pJlP7kALA57s:139u0tqtd; JSESSIONIDshaic=0000n6Byvt5tH9D_kgsfYRpNDu7:16fa6duvc; JSESSIONIDlz=00000ipxcXbXmnyFkyTnjWdPIK3:16f9u5edl; _gscu_993197171=33238614gp4uxp29; _gscs_993197171=t33315054vjxc4j83|pv:26; _gscbrs_993197171=1
+
+searchType=<samuraiLabs\>&keyWords=xxxxx
+[2015-06-03 18:01:13] 
+[2015-06-03 18:01:13] POST http://www.sgs.gov.cn/lz/etpsInfo.do?method=doSearch HTTP/1.1
+Host: www.sgs.gov.cn
+Connection: keep-alive
+Content-Length: 27
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Origin: http://www.sgs.gov.cn
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Referer: http://www.sgs.gov.cn/lz/etpsInfo.do?method=index
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6
+Cookie: JSESSIONID=0000TNMPqjg5Z13pJlP7kALA57s:139u0tqtd; JSESSIONIDshaic=0000n6Byvt5tH9D_kgsfYRpNDu7:16fa6duvc; JSESSIONIDlz=00000ipxcXbXmnyFkyTnjWdPIK3:16f9u5edl; _gscu_993197171=33238614gp4uxp29; _gscs_993197171=t33315054vjxc4j83|pv:26; _gscbrs_993197171=1
+
+searchType=1&keyWords=<samuraiLabs\>
+[2015-06-03 18:01:14] 

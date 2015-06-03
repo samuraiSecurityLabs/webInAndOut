@@ -224,8 +224,8 @@ namespace webAppInAndOutAnalyse
                  req.Timeout = 20000;
  
                  byte[] btBodys = Encoding.UTF8.GetBytes(Cr.Body);
-                 
-                 req.ContentLength = Convert.ToInt16(cr.Body.Length);//每次变换参数后都要获得BODY长度
+
+                 req.ContentLength = Convert.ToInt16(Cr.Body.Length);//每次变换参数后都要获得BODY长度
                  
                  req.GetRequestStream().Write(btBodys, 0, btBodys.Length);
 
