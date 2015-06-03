@@ -26,8 +26,6 @@ namespace webAppInAndOutAnalyse
         }
         private string method;//get or post or trace
 
-        
-
         public string Method
         {
             get { return method; }
@@ -130,7 +128,7 @@ namespace webAppInAndOutAnalyse
         {
             get
             {
-                    return this.headerpars;
+                return this.headerpars;
             }
             set { headerpars = value; }
         }
@@ -149,10 +147,9 @@ namespace webAppInAndOutAnalyse
         public Resolve()
         {
             this.otherheaders = "";
+
             this.body = "";
-            this.cookieList= new Dictionary<string,string>();
-            this.headerpars = new Dictionary<string,string>();
-            this.bodypars = new Dictionary<string,string>();
+
             Console.WriteLine("Constructor");
         }
 
@@ -161,16 +158,17 @@ namespace webAppInAndOutAnalyse
             if (str.Contains(substring))
             {
                 string strReplaced = str.Replace(substring, "");
+
                 return (str.Length - strReplaced.Length) / substring.Length;
             }
 
             return 0;
         }
         
-        public void ResolveHttpRequest(string httprequest)
+        public void ResolveHttpRequest(string httprequest)//解析请求方法解析请求后，对http等属性进行赋值。
         {
             /*
-             GET http://avatar.csdn.net/A/A/2/3_zhangzhennan1989.jpg HTTP/1.1
+            GET http://avatar.csdn.net/A/A/2/3_zhangzhennan1989.jpg HTTP/1.1
             Host: avatar.csdn.net
             Connection: keep-alive
             Accept: image/webp,**;q=0.8
@@ -181,11 +179,23 @@ namespace webAppInAndOutAnalyse
             Cookie: CloudGuest=U0ibguNE7DP9khMOyBt3I486oh1cz4kaFNY7byGH50A2VSmWXxDkmbOQAFUOWyyt73vzZ85/IbAXsCqW7fkEtoYBgCZ2XHxXt3qqgsxpoO4QtZx0bmTfo4/J8tz9VowFC2L8HdIADLMZOemVietcKjxQ2tHh+tA+0akCV1cFHDoXZ6xkYS9phRH1f5r7iSjd; uuid_tt_dd=-5728114581253503220_20150512; __gads=ID=92bf8cb62cc36be5:T=1431422228:S=ALNI_Ma9riYEUPDWLlhtxe6ip1TA9M5nag; __qca=P0-1870644198-1432092710731; _JQCMT_browser=18e39eecb67da78defe5ebf1f4d79383; __message_district_code=000000; _JQCMT_ifcookie=1; sid=00lx3une2jnjtidpdovzsini; lzstat_uv=35731125342580460042|3432968@2831342; lzstat_ss=2146225042_0_1432906774_2831342; dc_tos=np3jpy; __utmt=1; __utma=17226283.1130300211.1431422081.1432867432.1432877976.45; __utmb=17226283.1.10.1432877976; __utmc=17226283; __utmz=17226283.1432877976.45.44.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); dc_session_id=1432877974318; __message_sys_msg_id=0; __message_gu_msg_id=0; __message_cnel_msg_id=0; __message_in_school=0
             */
             Boolean tag;
+
             tag = false;
+
             String[] line = Regex.Split(httprequest, "\r\n", RegexOptions.IgnoreCase);
+
             this.method=line[0].Split(' ')[0];//可能是connect , trace,post等等
+
             this.url=line[0].Split(' ')[1];
+
             this.protocal=line[0].Split(' ')[2];//解析请求第一行
+
+            this.cookieList = new Dictionary<string, string>();
+
+            this.headerpars = new Dictionary<string, string>();
+
+            this.bodypars = new Dictionary<string, string>();
+
 
             if (this.method.Contains("POST"))//如果是POST请求
             {
@@ -297,22 +307,6 @@ namespace webAppInAndOutAnalyse
 
                 foreach (string tt in t)
                 {
-                    //if (this.cookieList.ContainsKey(tt) == false)
-                    //{
-                    //    if (SubstringCount(tt, "=") > 1)
-                    //    { //异常cookie，如：__gads=ID=92bf8cb62cc36be5:T=1431422228:S=ALNI_Ma9riYEUPDWLlhtxe6ip1TA9M5nag; 
-                    //        //取第一个参数__gads
-                    //        this.cookieList.Add("Abnormal" + tt.Split('=')[0].Trim(), tt); //异常cookie前面增加Abnormal标记
-                    //    }
-
-                    //    else
-                    //    {
-                    //        String[] tmp = tt.Split('='); //正常情况  key=value;
-
-                    //        this.cookieList.Add(tmp[0].Trim(), tmp[1].Trim());//debug
-                    //    }
-                    //}
-
                     if (!string.IsNullOrEmpty(tt))
                     {
                         if (tt.IndexOf('=') > 1)
@@ -325,12 +319,10 @@ namespace webAppInAndOutAnalyse
 
                         throw new ArgumentException("参数不合法");
                     }
+        
                 }
 
             }
-
-
-
 
         }
 

@@ -36,14 +36,7 @@ namespace webAppInAndOutAnalyse
                 Resolve cr= new Resolve();//初始化一个解析器
 
                 Analyse ay = new Analyse(content, cr);//初始化一个分析器
-
-                foreach (KeyValuePair<string, string> keys in ay.ResponseAnalysis())
-                {
-                    tmp = tmp + keys.Key + "=" + keys.Value + "\r\n";
-                }
-
-                findinandout.Text += tmp;
-                
+              
                 //资源分析
 
                 resourceAnalyse.ForeColor = Color.Red;
@@ -104,6 +97,11 @@ namespace webAppInAndOutAnalyse
                 httpresponseheaders.Text = "";
 
                 httpresponseheaders.Text = ay.Rspoheader;
+
+
+                Fuzzing fuz = new Fuzzing();
+
+                fuz.FuzzingResponse(content);
 
             }
         }

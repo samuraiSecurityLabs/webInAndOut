@@ -13,7 +13,6 @@ namespace webAppInAndOutAnalyse
 {
     class Analyse
     {
-
         private string req;//请求
 
         private Resolve cr;//解析器
@@ -34,7 +33,7 @@ namespace webAppInAndOutAnalyse
             set { rspohtml = value; }
         }
 
-        private string rspoheader;
+        private string rspoheader;//比对头部知道参数变化后请求的差异性
 
         public string Rspoheader
         {
@@ -42,7 +41,7 @@ namespace webAppInAndOutAnalyse
             set { rspoheader = value; }
         }
 
-        private Dictionary<int, string> implicitelements;
+        private Dictionary<int, string> implicitelements;//用来保存每次FUZZ的结果（隐式）
 
         public Dictionary<int, string> Implicitelements
         {
@@ -50,36 +49,47 @@ namespace webAppInAndOutAnalyse
             set { implicitelements = value; }
         }
 
+        private Dictionary<string, string> extrinsicelements;//用来保存每次FUZZ的结果（显示）
 
-
+        public Dictionary<string, string> Extrinsicelements
+        {
+            get { return extrinsicelements; }
+            set { extrinsicelements = value; }
+        }
+        
         public Analyse(string req,Resolve cr)//原始请求和解析类作为参数传递，接下来，交给解析类
         {
             this.req = req;
 
             this.cr = cr;
 
-            cr.ResolveHttpRequest(this.req);//请求的原文交给解析类处理，解析完毕数据。
+            cr.ResolveHttpRequest(this.req);//请求的原文交给解析类处理，解析完毕数据完成第一次初始化。
 
             this.rspohtml = "";
             
             Console.WriteLine("Start to analyse!");
 
-            implicitelements = new Dictionary<int, string>();
+            this.implicitelements = new Dictionary<int, string>();
+
+            this.extrinsicelements = new Dictionary<string, string>();
+
         }
 
+ 
         //把整个请求的输入点都分析到。包括cookie的解析等等，参数记得调用htmldecode还原一下
 
-        public Dictionary<string, string> ResponseAnalysis()//分析当前的响应，仅仅针对于显示的能够直接在源码中看到。
+        public void ResponseAnalysis(Resolve Cr)//分析当前Cr的响应体，仅仅针对于显示的能够直接在源码中看到。
         {
-            Dictionary<string, string> outcome = new Dictionary<string, string>();
-
             GetHttpResponse(Cr);//初始化了rspohtml
             
             foreach (KeyValuePair<string, string> keys in Cr.Headerpars)//查找的效率较低，要优化
             {
                 if (!keys.Value.Equals(String.Empty) && this.rspohtml.IndexOf(keys.Value) >= 0)
                 {
-                    outcome.Add("Header" + keys.Key, keys.Value);
+                    if (extrinsicelements.ContainsKey(keys.Key))//如果key已经存在了，则不再添加。
+                    {
+                        extrinsicelements.Add("[Header]" + keys.Key, keys.Value);
+                    }
                 }
             }
 
@@ -87,16 +97,22 @@ namespace webAppInAndOutAnalyse
             {
                 if (!keys.Value.Equals(String.Empty) && this.rspohtml.IndexOf(keys.Value) >= 0)
                 {
-                    outcome.Add("Body" + keys.Key, keys.Value);
+                    if (extrinsicelements.ContainsKey(keys.Key))
+                    {
+                        extrinsicelements.Add("[Body]" + keys.Key, keys.Value);
+                    }
                 }
             }
 
             foreach (KeyValuePair<string, string> keys in Cr.CookieList)
             {
-                //if (!keys.Value.Equals(String.Empty) && this.rspohtml.IndexOf(keys.Value) >= 0)
-                //{
-                //    outcome.Add("Cookie" + keys.Key, keys.Value);
-                //}
+                if (!keys.Value.Equals(String.Empty) && this.rspohtml.IndexOf(keys.Value) >= 0)
+                {
+                    if (extrinsicelements.ContainsKey(keys.Key))
+                    {
+                        extrinsicelements.Add("[Cookie]" + keys.Key, keys.Value);
+                    }
+                }
             }
 
             HtmlDocument htmlDoc = new HtmlDocument();
@@ -107,14 +123,14 @@ namespace webAppInAndOutAnalyse
 
             foreach (var script in htmlDoc.DocumentNode.Descendants("script").ToArray())//script
             {
-                implicitelements.Add(i, script.OuterHtml);
+                implicitelements.Add(i, script.OuterHtml);//隐式结果
 
                 i++;
             }
 
             foreach (var script in htmlDoc.DocumentNode.Descendants("link").ToArray())//css
             {
-                implicitelements.Add(i, script.OuterHtml);
+                implicitelements.Add(i, script.OuterHtml);//隐式结果
 
                 i++;
             }
@@ -126,7 +142,16 @@ namespace webAppInAndOutAnalyse
                 i++;
             }
 
-            return outcome;//显式结果
+            if (htmlDoc.DocumentNode.SelectNodes("//comment()") != null)
+            {
+                foreach (var comment in htmlDoc.DocumentNode.SelectNodes("//comment()").ToArray())//注释
+                {
+                    implicitelements.Add(i, comment.OuterHtml);//隐式结果
+
+                    i++;
+                }
+            }
+
         }
 
         public void ExternalResourceInResponse(string response)//当前响应中的外部资源，除图片之外的全部抓到
@@ -139,7 +164,7 @@ namespace webAppInAndOutAnalyse
             return true; //总是接受  
         }
 
-        private HttpWebResponse GetHttpResponse(Resolve Cr)
+        private HttpWebResponse GetHttpResponse(Resolve Cr)//解析器把URL请求解析得清楚
         {
             //直接response搜索输入点
 
@@ -189,8 +214,6 @@ namespace webAppInAndOutAnalyse
                  req.GetRequestStream().Write(btBodys, 0, btBodys.Length);
 
             }
-
-
 
             //req.ContentType = cr.Contenttype;
 

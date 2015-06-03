@@ -1,0 +1,5 @@
+1、location.search //获取url参数
+
+2、document.getElementById(?).innerHTML="可控" //来自请求的参数
+
+3、getParam（“参数名称”）
