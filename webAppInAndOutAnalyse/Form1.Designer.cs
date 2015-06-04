@@ -125,7 +125,6 @@
             // 
             // findinandout
             // 
-            this.findinandout.Enabled = false;
             this.findinandout.ForeColor = System.Drawing.Color.Red;
             this.findinandout.Location = new System.Drawing.Point(7, 7);
             this.findinandout.Multiline = true;

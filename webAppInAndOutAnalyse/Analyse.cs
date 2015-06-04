@@ -8,6 +8,7 @@ using System.Collections;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using HtmlAgilityPack;
+using System.Text.RegularExpressions;
 
 namespace webAppInAndOutAnalyse
 {
@@ -101,56 +102,126 @@ namespace webAppInAndOutAnalyse
                 }
             }
 
-            //foreach (KeyValuePair<string, string> keys in Cr.Bodypars)
-            //{
-            //    if (!keys.Value.Equals(String.Empty) && (this.rspohtml.IndexOf(keys.Value) >= 0 || this.rspohtml.IndexOf("samuraiLabs") >= 0))
-            //    {
-            //        if (extrinsicelements.ContainsKey("[Body]" + keys.Key) ==  false)
-            //        {
-            //            extrinsicelements.Add("[Body]" + keys.Key, keys.Value);
-            //        }
-            //    }
-            //}
+            if (this.rspohtml.IndexOf("samuraiLabs") >= 0)
+                {
+                    if (extrinsicelements.ContainsKey("[Body]" + keys.Key) == false)
+                    {
+                        extrinsicelements.Add("[Body]" + keys.Key, keys.Value);
+                    }
+                }
 
-            //foreach (KeyValuePair<string, string> keys in Cr.CookieList)
-            //{
-            //    if (!keys.Value.Equals(String.Empty) && (this.rspohtml.IndexOf(keys.Value) >= 0 || this.rspohtml.IndexOf("samuraiLabs") >= 0))
-            //    {
-            //        if (extrinsicelements.ContainsKey("[Cookie]" + keys.Key)==false)
-            //        {
-            //            extrinsicelements.Add("[Cookie]" + keys.Key, keys.Value);
-            //        }
-            //    }
-            //}
+
+            if (this.rspohtml.IndexOf("samuraiLabs") >= 0)
+                {
+                    if (extrinsicelements.ContainsKey("[Cookie]" + keys.Key) == false)
+                    {
+                        extrinsicelements.Add("[Cookie]" + keys.Key, keys.Value);
+                    }
+                }
 
             HtmlDocument htmlDoc = new HtmlDocument();
 
             htmlDoc.LoadHtml(this.rspohtml);
 
-            //int i = 0;
+            foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("script"))//script
+            {
+                if (script.Attributes["src"] != null)
+                {
+                    string a = script.Attributes["src"].Value;
 
-            //foreach (var script in htmlDoc.DocumentNode.Descendants("script").ToArray())//script
-            //{
-            //    if (implicitelements.ContainsKey(keys.Key))
-            //    {
-            //        implicitelements.Add(i, script.OuterHtml);//隐式结果
-            //    }
-            //    i++;
-            //}
+                    if (implicitelements.ContainsKey(script.Line) == false)
+                    {
+                        implicitelements.Add(script.Line, a);
 
-            //foreach (var script in htmlDoc.DocumentNode.Descendants("link").ToArray())//css
-            //{
-            //    implicitelements.Add(i, script.OuterHtml);//隐式结果
+                        Resolve rs = new Resolve();
 
-            //    i++;
-            //}
+                        string req = "GET " + Cr.Url + " HTTP/1.0\r\n"//避免POST的情况下，还得去删除BODY什么的。
+                                     + "Host: " + Cr.Host + "\r\n"
+                                     + "User-Agent:" + cr.Useragent + "\r\n"
+                                     + "Accept: text/html, application/xhtml+xml, */*\r\n"
+                                     + "Cookie: " + Cr.Cookie + "\r\n"
+                                     + "Referer:" + Cr.Referer + "\r\n"
+                                     + "Connection: Keep-Alive\r\n";
 
-            //foreach (var script in htmlDoc.DocumentNode.Descendants("embed").ToArray())//swf
-            //{
-            //    implicitelements.Add(i, script.OuterHtml);//隐式结果
+                        if (a.Contains("http://"))
+                        {
+                            string pattern = @"(?<=http://)[\w\.]+[^/]";　//C#正则表达式提取匹配URL的模式  
 
-            //    i++;
-            //}
+                            MatchCollection mc = Regex.Matches(a, pattern);//满足pattern的匹配集合
+
+                            string domain = "";
+
+                            foreach (Match match in mc)
+                            {
+                                domain = match.ToString();
+                            }
+
+                            req = req.Replace(Cr.Url, a);
+
+                            req = req.Replace(Cr.Host,domain);
+
+                        }
+
+                        else
+                        {
+                            req = req.Replace(Cr.Url, Cr.Host+a);
+                        }
+
+                        Analyse ays = new Analyse(req,rs);
+
+                        a = ays.rspohtml; 
+
+                    }
+                }
+                //else//其实这个不必分析，这个是显式展示，直接分析
+                //{
+                //    string a = script.InnerText;
+                //    if (implicitelements.ContainsKey(script.Line) == false)
+                //    {
+                //        implicitelements.Add(script.Line, a);
+                //    }
+                //}
+            }
+
+            foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("link"))//script
+            {
+                if (script.Attributes["href"] != null)
+                {
+                    string a = script.Attributes["href"].Value;
+                    if (implicitelements.ContainsKey(script.Line) == false)
+                    {
+                        implicitelements.Add(script.Line, a);
+                    }
+                }
+            }
+
+            foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("embed"))//script
+            {
+                if (script.Attributes["src"] != null)
+                {
+                    string a = script.Attributes["src"].Value;
+                    if (implicitelements.ContainsKey(script.Line) == false)
+                    {
+                        implicitelements.Add(script.Line, a);
+                    }
+                }
+
+            }
+
+            //<meta name="DCS.dcsuri" content="/zh-cn/library/5t9y35bd(d=default,l=zh-cn,v=vs.110).aspx" />
+
+            foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("meta"))//script
+            {
+                if (script.Attributes["content"] != null)
+                {
+                    string a = script.Attributes["content"].Value;
+                    if (implicitelements.ContainsKey(script.Line) == false && a.Contains("http")==true)
+                    {
+                        implicitelements.Add(script.Line, a);
+                    }
+                }
+
+            }
 
             //if (htmlDoc.DocumentNode.SelectNodes("//comment()") != null)
             //{
@@ -231,35 +302,69 @@ namespace webAppInAndOutAnalyse
 
             }
 
-            //req.ContentType = cr.Contenttype;
-
-            //CookieContainer cc = new CookieContainer();
-            
-            //foreach (KeyValuePair<string, string> keys in Cr.CookieList)
-            //{
-            //    try
-            //    {
-            //        cc.Add(new Uri(Cr.Url), new Cookie(keys.Key, keys.Value));//这里会new特别多的cookie对象，必须后续优化掉！
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        //要捕捉下，否则报错。因为COOKIE有限制
-            //    }
-            //}
-
             //req.CookieContainer = cc;//接受返回的cookie         
    
             //cookiestr =  request.CookieContainer.GetCookieHeader(request.RequestUri);  
 
-            HttpWebResponse rspo = (HttpWebResponse)req.GetResponse();
+            HttpWebResponse rspo;
 
-            this.rspoheader = rspo.StatusCode.ToString() + "\r\n" + rspo.Headers.ToString();//没有对头部做合适解析
+            try
+            {
+                rspo = (HttpWebResponse)req.GetResponse();//响应的编码
+            }
+            catch (WebException)
+            {
+                return null;
+            }
+
+            this.rspoheader = rspo.StatusCode.ToString() + "\r\n" + rspo.Headers.ToString();
 
             Stream responseStream = rspo.GetResponseStream();
 
-            StreamReader streamReader = new StreamReader(responseStream, Encoding.UTF8);
+            string html;
 
-            string html = streamReader.ReadToEnd();
+            if (rspo.Headers["Content-Type"].Contains("="))
+            {
+                StreamReader streamReader = new StreamReader(responseStream, Encoding.GetEncoding(rspo.Headers["Content-Type"].Split('=')[1]));//Encoding.UTF8
+
+                html = streamReader.ReadToEnd();
+            }
+            else
+            {
+                MemoryStream ms = new MemoryStream();
+
+                byte[] buffer = new byte[1024];
+
+                while (true)
+                {
+                    int sz = responseStream.Read(buffer, 0, 1024);
+
+                    if (sz == 0) break;
+
+                    ms.Write(buffer, 0, sz);
+
+                }
+
+                //默认编码读取            
+                ms.Position = 0;//指针置于流开头
+
+                StreamReader streamReader = new StreamReader(ms, Encoding.UTF8);//Encoding.UTF8
+
+                html = streamReader.ReadToEnd();
+
+                Match charSetMatch = Regex.Match(html, "<meta([^<]*)charset=([^<]*)\"", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+
+                string webCharSet = charSetMatch.Groups[2].Value;
+
+                if (!String.IsNullOrEmpty(webCharSet))
+                {
+                    ms.Position = 0;
+
+                    streamReader = new StreamReader(ms, Encoding.GetEncoding(webCharSet));
+
+                    html = streamReader.ReadToEnd();
+                }
+            }
 
             this.rspohtml = html;
 

@@ -249,7 +249,6 @@ namespace webAppInAndOutAnalyse
                     }
                     if (line[i].Contains("Cookie:"))
                     {
-
                         this.cookie = Regex.Split(line[i], "Cookie:", RegexOptions.IgnoreCase)[1].Trim();
 
                         tag = true;
@@ -306,7 +305,14 @@ namespace webAppInAndOutAnalyse
                     {
                         if (tt.IndexOf('=') > 1)
                         {
-                            this.cookieList.Add(tt.Split('=')[0].Trim(), tt.Substring(tt.IndexOf('='), tt.Length-tt.IndexOf('=')).Substring(1));
+                            /*
+                             * 重复的COOKIE?  
+                             Cookie: __utma=153457209.2078525369.1432102877.1432102877.1432102877.1; __utmz=153457209.1432102877.1.1.utmcsr=kanxue.com|utmccn=(referral)|utmcmd=referral|utmcct=/default.php; __jsluid=5b07bdf10f65bba22624796632a78c64; bblastvisit=1433381899; bblastactivity=0; bbuserid=550452; IDstack=%2C550452%2C; bbsessionhash=4a36dcf720ac65e36c81718c12f114a2; bbnp_notices_displayed=5; bbpassword=89ac482f95ed575c7d213e5fce7f78ff; __utmt=1; bbthread_lastview=181426b47a52447180306a862102aeebc57f7ca9a-3-%7Bi-184375_i-1433348651_i-201037_i-1433344455_i-200689_i-1433334259_%7D; __utma=181774708.1431729049.1432102886.1433323989.1433381231.5; __utmb=181774708.46.10.1433381231; __utmc=181774708; __utmz=181774708.1433323989.4.3.utmcsr=baidu|utmccn=(organic)|utmcmd=organic|utmctr=AndBug%20
+                             */
+                            if (this.cookieList.ContainsKey(tt.Split('=')[0].Trim()) == false)
+                            {
+                                this.cookieList.Add(tt.Split('=')[0].Trim(), tt.Substring(tt.IndexOf('='), tt.Length - tt.IndexOf('=')).Substring(1));
+                            }
                         }
                     }
                     else
