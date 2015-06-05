@@ -206,7 +206,9 @@ namespace webAppInAndOutAnalyse
             {
 
                 this.body = Regex.Split(httprequest, "\r\n\r\n", RegexOptions.IgnoreCase)[1];//body part!!!
+
                 line = Regex.Split(Regex.Split(httprequest, "\r\n\r\n", RegexOptions.IgnoreCase)[0], "\r\n", RegexOptions.IgnoreCase);//header part
+               
                 for (int i = 1; i < line.Length; ++i)
                 {
 

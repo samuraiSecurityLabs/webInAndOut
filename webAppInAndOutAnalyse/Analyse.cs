@@ -209,6 +209,7 @@ namespace webAppInAndOutAnalyse
                 if (script.Attributes["href"] != null)
                 {
                     string a = script.Attributes["href"].Value;
+
                     if (Cr.Innersources.ContainsKey(script.Line) == false)
                     {
                         Cr.Innersources.Add(script.Line, a);
@@ -221,6 +222,7 @@ namespace webAppInAndOutAnalyse
                 if (script.Attributes["src"] != null)
                 {
                     string a = script.Attributes["src"].Value;
+
                     if (Cr.Innersources.ContainsKey(script.Line) == false)
                     {
                         Cr.Innersources.Add(script.Line, a);
@@ -236,9 +238,15 @@ namespace webAppInAndOutAnalyse
                 if (script.Attributes["content"] != null)
                 {
                     string a = script.Attributes["content"].Value;
+
                     if (Cr.Innersources.ContainsKey(script.Line) == false && a.Contains("http") == true)
                     {
+                        //要正则匹配一下，抽取出HTTP://url
+
+                        a = Regex.Split(a, "http://", RegexOptions.IgnoreCase)[1];//header part
+
                         Cr.Innersources.Add(script.Line, a);
+
                     }
                 }
 

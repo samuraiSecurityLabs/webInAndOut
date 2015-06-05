@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HtmlAgilityPack;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace webAppInAndOutAnalyse
 {
@@ -151,6 +152,8 @@ namespace webAppInAndOutAnalyse
 
 
                 fuzzrs.ResolveHttpRequest(req);//对请求重新定义
+
+                loghelper.WriteLine(req);
 
                 fuzzay.GetHttpResponse(fuzzrs);
 

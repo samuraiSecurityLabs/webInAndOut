@@ -62,7 +62,7 @@
             this.httpRequestContent.Multiline = true;
             this.httpRequestContent.Name = "httpRequestContent";
             this.httpRequestContent.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.httpRequestContent.Size = new System.Drawing.Size(501, 189);
+            this.httpRequestContent.Size = new System.Drawing.Size(501, 199);
             this.httpRequestContent.TabIndex = 0;
             this.httpRequestContent.Text = "粘贴觉得可疑的HTTP请求至此";
             this.httpRequestContent.WordWrap = false;
@@ -257,7 +257,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(528, 505);
+            this.ClientSize = new System.Drawing.Size(525, 503);
             this.Controls.Add(this.clearRequest);
             this.Controls.Add(this.savaRequest);
             this.Controls.Add(this.tab);
