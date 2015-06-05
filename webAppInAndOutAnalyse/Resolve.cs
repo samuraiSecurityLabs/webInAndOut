@@ -148,6 +148,14 @@ namespace webAppInAndOutAnalyse
             set { currentreq = value; }
         }
 
+        private Dictionary<int, string> innersources;
+
+        public Dictionary<int, string> Innersources
+        {
+            get { return innersources; }
+            set { innersources = value; }
+        }
+
         public Resolve()
         {
             this.otherheaders = "";
@@ -155,6 +163,8 @@ namespace webAppInAndOutAnalyse
             this.body = "";
 
             Console.WriteLine("Constructor");
+
+            innersources = new Dictionary<int, string>();
         }
 
         static int SubstringCount(string str, string substring)

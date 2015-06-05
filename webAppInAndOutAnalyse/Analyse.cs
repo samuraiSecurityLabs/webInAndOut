@@ -31,6 +31,7 @@ namespace webAppInAndOutAnalyse
         public string Rspohtml
         {
             get { return rspohtml; }
+
             set { rspohtml = value; }
         }
 
@@ -39,25 +40,10 @@ namespace webAppInAndOutAnalyse
         public string Rspoheader
         {
             get { return rspoheader; }
+
             set { rspoheader = value; }
         }
 
-        private Dictionary<int, string> implicitelements;//用来保存每次FUZZ的结果（隐式）
-
-        public Dictionary<int, string> Implicitelements
-        {
-            get { return implicitelements; }
-            set { implicitelements = value; }
-        }
-
-        private Dictionary<string, string> extrinsicelements;//用来保存每次FUZZ的结果（显示）
-
-        public Dictionary<string, string> Extrinsicelements
-        {
-            get { return extrinsicelements; }
-            set { extrinsicelements = value; }
-        }
-        
         public Analyse(string req,Resolve cr)//原始请求和解析类作为参数传递，接下来，交给解析类
         {
             this.req = req;
@@ -69,170 +55,6 @@ namespace webAppInAndOutAnalyse
             this.rspohtml = "";
             
             Console.WriteLine("Start to analyse!");
-
-            this.implicitelements = new Dictionary<int, string>();
-
-            this.extrinsicelements = new Dictionary<string, string>();
-
-        }
-
- 
-        //把整个请求的输入点都分析到。包括cookie的解析等等，参数记得调用htmldecode还原一下
-
-        public void ResponseAnalysis(Resolve Cr, KeyValuePair<string, string> keys,string position)//分析当前Cr的响应体。
-        {
-            GetHttpResponse(Cr);//初始化了rspohtml
-            
-            //foreach (KeyValuePair<string, string> keys in Cr.Headerpars)//查找的效率较低，要优化
-            //{
-            //    if (!keys.Value.Equals(String.Empty) && (this.rspohtml.IndexOf(keys.Value) >= 0 || this.rspohtml.IndexOf("samuraiLabs") >= 0))//考虑到被过滤<>\情形
-            //    {
-            //        if (extrinsicelements.ContainsKey("[Header]" + keys.Key) ==  false)//如果key已经存在了，则不再添加。
-            //        {
-            //            extrinsicelements.Add("[Header]" + keys.Key, keys.Value);
-            //        }
-            //    }
-            //}
-
-            if (this.rspohtml.IndexOf("samuraiLabs") >= 0)//考虑到被过滤<>\情形
-            {
-                if (extrinsicelements.ContainsKey("[Header]" + keys.Key) == false)//如果key已经存在了，则不再添加。
-                {
-                    extrinsicelements.Add("[Header]" + keys.Key, keys.Value);
-                }
-            }
-
-            if (this.rspohtml.IndexOf("samuraiLabs") >= 0)
-                {
-                    if (extrinsicelements.ContainsKey("[Body]" + keys.Key) == false)
-                    {
-                        extrinsicelements.Add("[Body]" + keys.Key, keys.Value);
-                    }
-                }
-
-
-            if (this.rspohtml.IndexOf("samuraiLabs") >= 0)
-                {
-                    if (extrinsicelements.ContainsKey("[Cookie]" + keys.Key) == false)
-                    {
-                        extrinsicelements.Add("[Cookie]" + keys.Key, keys.Value);
-                    }
-                }
-
-            HtmlDocument htmlDoc = new HtmlDocument();
-
-            htmlDoc.LoadHtml(this.rspohtml);
-
-            foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("script"))//script
-            {
-                if (script.Attributes["src"] != null)
-                {
-                    string a = script.Attributes["src"].Value;
-
-                    if (implicitelements.ContainsKey(script.Line) == false)
-                    {
-                        implicitelements.Add(script.Line, a);
-
-                        Resolve rs = new Resolve();
-
-                        string req = "GET " + Cr.Url + " HTTP/1.0\r\n"//避免POST的情况下，还得去删除BODY什么的。
-                                     + "Host: " + Cr.Host + "\r\n"
-                                     + "User-Agent:" + cr.Useragent + "\r\n"
-                                     + "Accept: text/html, application/xhtml+xml, */*\r\n"
-                                     + "Cookie: " + Cr.Cookie + "\r\n"
-                                     + "Referer:" + Cr.Referer + "\r\n"
-                                     + "Connection: Keep-Alive\r\n";
-
-                        if (a.Contains("http://"))
-                        {
-                            string pattern = @"(?<=http://)[\w\.]+[^/]";　//C#正则表达式提取匹配URL的模式  
-
-                            MatchCollection mc = Regex.Matches(a, pattern);//满足pattern的匹配集合
-
-                            string domain = "";
-
-                            foreach (Match match in mc)
-                            {
-                                domain = match.ToString();
-                            }
-
-                            req = req.Replace(Cr.Url, a);
-
-                            req = req.Replace(Cr.Host,domain);
-
-                        }
-
-                        else
-                        {
-                            req = req.Replace(Cr.Url, Cr.Host+a);
-                        }
-
-                        Analyse ays = new Analyse(req,rs);
-
-                        a = ays.rspohtml; 
-
-                    }
-                }
-                //else//其实这个不必分析，这个是显式展示，直接分析
-                //{
-                //    string a = script.InnerText;
-                //    if (implicitelements.ContainsKey(script.Line) == false)
-                //    {
-                //        implicitelements.Add(script.Line, a);
-                //    }
-                //}
-            }
-
-            foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("link"))//script
-            {
-                if (script.Attributes["href"] != null)
-                {
-                    string a = script.Attributes["href"].Value;
-                    if (implicitelements.ContainsKey(script.Line) == false)
-                    {
-                        implicitelements.Add(script.Line, a);
-                    }
-                }
-            }
-
-            foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("embed"))//script
-            {
-                if (script.Attributes["src"] != null)
-                {
-                    string a = script.Attributes["src"].Value;
-                    if (implicitelements.ContainsKey(script.Line) == false)
-                    {
-                        implicitelements.Add(script.Line, a);
-                    }
-                }
-
-            }
-
-            //<meta name="DCS.dcsuri" content="/zh-cn/library/5t9y35bd(d=default,l=zh-cn,v=vs.110).aspx" />
-
-            foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("meta"))//script
-            {
-                if (script.Attributes["content"] != null)
-                {
-                    string a = script.Attributes["content"].Value;
-                    if (implicitelements.ContainsKey(script.Line) == false && a.Contains("http")==true)
-                    {
-                        implicitelements.Add(script.Line, a);
-                    }
-                }
-
-            }
-
-            //if (htmlDoc.DocumentNode.SelectNodes("//comment()") != null)
-            //{
-            //    foreach (var comment in htmlDoc.DocumentNode.SelectNodes("//comment()").ToArray())//注释
-            //    {
-            //        implicitelements.Add(i, comment.OuterHtml);//隐式结果
-
-            //        i++;
-            //    }
-            //}
-
         }
 
         public void ExternalResourceInResponse(string response)//当前响应中的外部资源，除图片之外的全部抓到
@@ -245,7 +67,7 @@ namespace webAppInAndOutAnalyse
             return true; //总是接受  
         }
 
-        private HttpWebResponse GetHttpResponse(Resolve Cr)//解析器把URL请求解析得清楚
+        public HttpWebResponse GetHttpResponse(Resolve Cr)//解析器把URL请求解析得清楚
         {
             //直接response搜索输入点
 
@@ -302,10 +124,6 @@ namespace webAppInAndOutAnalyse
 
             }
 
-            //req.CookieContainer = cc;//接受返回的cookie         
-   
-            //cookiestr =  request.CookieContainer.GetCookieHeader(request.RequestUri);  
-
             HttpWebResponse rspo;
 
             try
@@ -344,8 +162,8 @@ namespace webAppInAndOutAnalyse
                     ms.Write(buffer, 0, sz);
 
                 }
-
-                //默认编码读取            
+                //默认编码读取
+            
                 ms.Position = 0;//指针置于流开头
 
                 StreamReader streamReader = new StreamReader(ms, Encoding.UTF8);//Encoding.UTF8
@@ -368,6 +186,64 @@ namespace webAppInAndOutAnalyse
 
             this.rspohtml = html;
 
+            HtmlDocument htmlDoc = new HtmlDocument();
+
+            htmlDoc.LoadHtml(this.rspohtml);
+
+            foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("script"))//script
+            {
+                if (script.Attributes["src"] != null)
+                {
+                    string a = script.Attributes["src"].Value;
+
+                    if (Cr.Innersources.ContainsKey(script.Line) == false)
+                    {
+                        Cr.Innersources.Add(script.Line, a);
+
+                    }
+                }
+            }
+
+            foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("link"))//script
+            {
+                if (script.Attributes["href"] != null)
+                {
+                    string a = script.Attributes["href"].Value;
+                    if (Cr.Innersources.ContainsKey(script.Line) == false)
+                    {
+                        Cr.Innersources.Add(script.Line, a);
+                    }
+                }
+            }
+
+            foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("embed"))//script
+            {
+                if (script.Attributes["src"] != null)
+                {
+                    string a = script.Attributes["src"].Value;
+                    if (Cr.Innersources.ContainsKey(script.Line) == false)
+                    {
+                        Cr.Innersources.Add(script.Line, a);
+                    }
+                }
+
+            }
+
+            //<meta name="DCS.dcsuri" content="/zh-cn/library/5t9y35bd(d=default,l=zh-cn,v=vs.110).aspx" />
+
+            foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("meta"))//script
+            {
+                if (script.Attributes["content"] != null)
+                {
+                    string a = script.Attributes["content"].Value;
+                    if (Cr.Innersources.ContainsKey(script.Line) == false && a.Contains("http") == true)
+                    {
+                        Cr.Innersources.Add(script.Line, a);
+                    }
+                }
+
+            }
+            
             return rspo;
         }
 

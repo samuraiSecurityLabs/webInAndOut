@@ -265,7 +265,7 @@
             this.Controls.Add(this.httpRequestContent);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "mainForm";
-            this.Text = "跨站辅助 samuraiSecurityLabs";
+            this.Text = "跨站辅助 SamuraiSecurityLabs";
             this.tab.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

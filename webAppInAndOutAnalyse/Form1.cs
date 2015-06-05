@@ -32,15 +32,14 @@ namespace webAppInAndOutAnalyse
                 string tmp = "";
 
                 string content = httpRequestContent.Text;
+                
+                Resolve rs = new Resolve();
 
-                Fuzzing fuz = new Fuzzing();
-
-                Analyse ay = fuz.FuzzingResponse(content);
+                Analyse ay = new Analyse(content,rs);
   
                 //资源分析
 
                 resourceAnalyse.ForeColor = Color.Red;
-                //resourceAnalyse.Text =ay.Cr.Url + "\r\n" + ay.Cr.Host ;
 
                 resourceAnalyse.Text += "cookie参数:(" + ay.Cr.CookieList.Count + ")\r\n";
 
@@ -75,37 +74,27 @@ namespace webAppInAndOutAnalyse
 
                 resourceAnalyse.Text += tmp;
 
+                Fuzzing fuz = new Fuzzing();
+
+                fuz.FuzzingResponse(content);//把完整没Fuzz的值传递进去。
+
                 tmp = "";
 
                 findinandout.Text += "显式参数：\r\n";
 
-                foreach (KeyValuePair<string, string> keys in ay.Extrinsicelements)
-                {
-                    tmp = tmp + keys.Key + "=" +keys.Value + "\r\n";
-                }
-
-                findinandout.Text += tmp;
-
-                findinandout.Text += "隐式参数：\r\n";
-
-                foreach (KeyValuePair<int, string> keys in ay.Implicitelements)
+                foreach (KeyValuePair<string, string> keys in fuz.Extrinsicelements)
                 {
                     tmp = tmp + keys.Key + "=" + keys.Value + "\r\n";
                 }
 
                 findinandout.Text += tmp;
 
-                //响应内容
+                findinandout.Text += "隐式参数：\r\n";
 
-                httpresponse.Text = "";
-
-                httpresponse.Text = ay.Rspohtml;
-
-                //响应头部
-
-                httpresponseheaders.Text = "";
-
-                httpresponseheaders.Text = ay.Rspoheader;
+                foreach (KeyValuePair<int, string> keys in fuz.Implicitelements)
+                {
+                    tmp = tmp + keys.Key + "=" + keys.Value + "\r\n";
+                }
 
             }
         }
