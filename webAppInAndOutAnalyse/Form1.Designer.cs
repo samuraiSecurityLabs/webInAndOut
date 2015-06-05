@@ -257,7 +257,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(525, 503);
+            this.ClientSize = new System.Drawing.Size(523, 503);
             this.Controls.Add(this.clearRequest);
             this.Controls.Add(this.savaRequest);
             this.Controls.Add(this.tab);
@@ -265,7 +265,7 @@
             this.Controls.Add(this.httpRequestContent);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "mainForm";
-            this.Text = "跨站辅助 SamuraiSecurityLabs";
+            this.Text = "渗透辅助（优先支持XSS） SamuraiSecurityLabs";
             this.tab.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

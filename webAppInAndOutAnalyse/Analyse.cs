@@ -210,10 +210,19 @@ namespace webAppInAndOutAnalyse
                 {
                     string a = script.Attributes["href"].Value;
 
-                    if (Cr.Innersources.ContainsKey(script.Line) == false)
+                    if (Cr.Innersources.ContainsKey(script.Line) == false && a.Contains("//") == true)// 类似http://  https://  //www.baidu.com
+                    {
+                        a = Regex.Split(a, "//", RegexOptions.IgnoreCase)[1];//header part
+                        Cr.Innersources.Add(script.Line, a);
+                    }
+
+                    if (Cr.Innersources.ContainsKey(script.Line) == false && a.Contains("//") == false)
+                    // 如果没有，http://  https://  //www.baidu.com
+                    //直接就是添加。
                     {
                         Cr.Innersources.Add(script.Line, a);
                     }
+
                 }
             }
 

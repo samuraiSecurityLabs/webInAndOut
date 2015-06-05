@@ -65,7 +65,7 @@ namespace webAppInAndOutAnalyse
 
                 fuzzrs.ResolveHttpRequest(req);//对请求重新定义
 
-                fay.GetHttpResponse(fuzzrs);
+                fay.GetHttpResponse(fuzzrs);//线程化
 
                 loghelper.WriteLine(fay.Rspohtml);
 
@@ -103,9 +103,13 @@ namespace webAppInAndOutAnalyse
 
                 loghelper.WriteLine(req);
 
-                fuzzrs.ResolveHttpRequest(req);//对请求重新定义
+                //fuzzrs.ResolveHttpRequest(req);//对请求重新定义
 
-                fay.GetHttpResponse(fuzzrs); ;//分析特定请求的响应分析
+                //fay.GetHttpResponse(fuzzrs);//分析特定请求的响应分析
+
+                Thread thread = new Thread(new ParameterizedThreadStart(RequestFuzzy));
+
+                thread.Start((object)req);    
 
                 loghelper.WriteLine(fay.Rspohtml);
 
@@ -147,7 +151,15 @@ namespace webAppInAndOutAnalyse
 
                 else
                 {
-                    req = req.Replace(keys.Value, "http://" + fsl.Host + "/" + keys.Value);
+                    if (keys.Value.Contains(".") == false)
+                    {
+                        req = req.Replace(keys.Value, "http://" + fsl.Host + "/" + keys.Value);//这个地方也是有问题，应该可能是https
+                    }
+                    else
+                    {
+                        req = req.Replace(keys.Value, "http://"  + keys.Value);//这个地方也是有问题，应该可能是https
+                    }
+
                 }
 
 
@@ -160,133 +172,19 @@ namespace webAppInAndOutAnalyse
                 loghelper.WriteLine(fuzzay.Rspohtml);
 
             }
-
-
-
+            
             return true;//返回结果 fay.i 、  fay.e  输入输出结果
+        }
+
+
+        private static void RequestFuzzy(object req)//请求传递进来，发包
+        {
+            Resolve fsl = new Resolve();
+
+            Analyse fay = new Analyse((string)req, fsl);
+       
+            fay.GetHttpResponse(fsl);
         }
     }
 }
 
-
-
-            //if (this.rspohtml.IndexOf("samuraiLabs") >= 0)//考虑到被过滤<>\情形
-            //{
-            //    if (position.Equals("Header"))
-            //    {
-            //        if (extrinsicelements.ContainsKey("[Header]" + keys.Key) == false)//如果key已经存在了，则不再添加。
-            //        {
-            //            extrinsicelements.Add("[Header]" + keys.Key, keys.Value);
-            //        }
-            //    }
-            //    if (position.Equals("Body"))
-            //    {
-            //        if (extrinsicelements.ContainsKey("[Body]" + keys.Key) == false)
-            //        {
-            //            extrinsicelements.Add("[Body]" + keys.Key, keys.Value);
-            //        }
-            //    }
-            //    if (position.Equals("Cookie"))
-            //    {
-            //        if (extrinsicelements.ContainsKey("[Cookie]" + keys.Key) == false)
-            //        {
-            //            extrinsicelements.Add("[Cookie]" + keys.Key, keys.Value);
-            //        }
-            //    }
-            //}
-
-            //HtmlDocument htmlDoc = new HtmlDocument();
-
-            //htmlDoc.LoadHtml(this.rspohtml);
-
-            //foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("script"))//script
-            //{
-            //    if (script.Attributes["src"] != null)
-            //    {
-            //        string a = script.Attributes["src"].Value;
-
-            //        if (implicitelements.ContainsKey(script.Line) == false)
-            //        {
-            //            implicitelements.Add(script.Line, a);
-
-            //            Resolve rs = new Resolve();
-
-            //            string req = "GET " + Cr.Url + " HTTP/1.0\r\n"//避免POST的情况下，还得去删除BODY什么的。
-            //                         + "Host: " + Cr.Host + "\r\n"
-            //                         + "User-Agent:" + cr.Useragent + "\r\n"
-            //                         + "Accept: text/html, application/xhtml+xml, */*\r\n"
-            //                         + "Cookie: " + Cr.Cookie + "\r\n"
-            //                         + "Referer:" + Cr.Referer + "\r\n"
-            //                         + "Connection: Keep-Alive\r\n";
-
-            //            if (a.Contains("http://"))
-            //            {
-            //                string pattern = @"(?<=http://)[\w\.]+[^/]";　//C#正则表达式提取匹配URL的模式  
-
-            //                MatchCollection mc = Regex.Matches(a, pattern);//满足pattern的匹配集合
-
-            //                string domain = "";
-
-            //                foreach (Match match in mc)
-            //                {
-            //                    domain = match.ToString();
-            //                }
-
-            //                req = req.Replace(Cr.Url, a);
-
-            //                req = req.Replace(Cr.Host,domain);
-
-            //            }
-
-            //            else
-            //            {
-            //                req = req.Replace(Cr.Url, Cr.Host+a);
-            //            }
-
-            //            Analyse ays = new Analyse(req,rs);
-
-            //            a = ays.rspohtml; 
-
-            //        }
-            //    }
-            //}
-
-            //foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("link"))//script
-            //{
-            //    if (script.Attributes["href"] != null)
-            //    {
-            //        string a = script.Attributes["href"].Value;
-            //        if (implicitelements.ContainsKey(script.Line) == false)
-            //        {
-            //            implicitelements.Add(script.Line, a);
-            //        }
-            //    }
-            //}
-
-            //foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("embed"))//script
-            //{
-            //    if (script.Attributes["src"] != null)
-            //    {
-            //        string a = script.Attributes["src"].Value;
-            //        if (implicitelements.ContainsKey(script.Line) == false)
-            //        {
-            //            implicitelements.Add(script.Line, a);
-            //        }
-            //    }
-
-            //}
-
-            ////<meta name="DCS.dcsuri" content="/zh-cn/library/5t9y35bd(d=default,l=zh-cn,v=vs.110).aspx" />
-
-            //foreach (HtmlNode script in htmlDoc.DocumentNode.Descendants("meta"))//script
-            //{
-            //    if (script.Attributes["content"] != null)
-            //    {
-            //        string a = script.Attributes["content"].Value;
-            //        if (implicitelements.ContainsKey(script.Line) == false && a.Contains("http")==true)
-            //        {
-            //            implicitelements.Add(script.Line, a);
-            //        }
-            //    }
-
-            //}
